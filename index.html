@@ -9,6 +9,7 @@
 <body>
 
     <div class="theme-switcher">
+        <!-- O SVG inicial agora está completo -->
         <svg id="theme-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
@@ -64,30 +65,31 @@
                     document.querySelector('#Todos .loading-message').textContent = 'Erro ao carregar dashboards.';
                 });
             
-            // Lógica do Modo Escuro
+            // Lógica do Modo Escuro (CORRIGIDA)
             const themeSwitcher = document.querySelector('.theme-switcher');
-            const themeIcon = document.getElementById('theme-toggle-icon');
-            const sunIconPath = '<path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path><circle cx="12" cy="12" r="5"></circle>';
-            const moonIconPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+            const themeIconContainer = document.getElementById('theme-toggle-icon');
+            
+            // Templates completos dos SVGs
+            const sunIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path><circle cx="12" cy="12" r="5"></circle></svg>';
+            const moonIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
 
-            const currentTheme = localStorage.getItem('theme');
-            if (currentTheme === 'dark') {
-                document.body.classList.add('dark-mode');
-                themeIcon.innerHTML = sunIconPath;
-            } else {
-                themeIcon.innerHTML = moonIconPath;
-            }
-
-            themeSwitcher.addEventListener('click', function() {
-                document.body.classList.toggle('dark-mode');
-                let theme = 'light';
-                if (document.body.classList.contains('dark-mode')) {
-                    theme = 'dark';
-                    themeIcon.innerHTML = sunIconPath;
+            function setTheme(theme) {
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    themeSwitcher.innerHTML = sunIconSVG;
                 } else {
-                    themeIcon.innerHTML = moonIconPath;
+                    document.body.classList.remove('dark-mode');
+                    themeSwitcher.innerHTML = moonIconSVG;
                 }
                 localStorage.setItem('theme', theme);
+            }
+
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            setTheme(currentTheme);
+
+            themeSwitcher.addEventListener('click', function() {
+                const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+                setTheme(newTheme);
             });
         });
 
