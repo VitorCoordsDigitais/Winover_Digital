@@ -8,6 +8,12 @@
 </head>
 <body>
 
+    <div class="theme-switcher">
+        <svg id="theme-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </div>
+
     <header class="header">
         <h1>Winover Digital</h1>
         <p>Portal de Business Intelligence</p>
@@ -26,29 +32,16 @@
                 <button class="tab-link" onclick="openTab(event, 'Portal')">Portal</button>
                 <button class="tab-link" onclick="openTab(event, 'AgenteVirtual')">Agente Virtual</button>
             </div>
-            <div class="search-container">
-                <input type="text" id="searchBox" class="search-box" placeholder="Buscar em todos os dashboards...">
-            </div>
         </div>
 
-        <!-- As seções abaixo serão preenchidas dinamicamente pelo script -->
         <div id="Todos" class="tab-content active">
             <div class="dashboard-grid">
                 <p class="loading-message">Carregando dashboards...</p>
             </div>
         </div>
-
-        <div id="WhatsApp" class="tab-content" data-category="WhatsApp">
-            <div class="dashboard-grid"></div>
-        </div>
-
-        <div id="Portal" class="tab-content" data-category="Portal">
-            <div class="dashboard-grid"></div>
-        </div>
-
-        <div id="AgenteVirtual" class="tab-content" data-category="Agente Virtual">
-            <div class="dashboard-grid"></div>
-        </div>
+        <div id="WhatsApp" class="tab-content" data-category="WhatsApp"><div class="dashboard-grid"></div></div>
+        <div id="Portal" class="tab-content" data-category="Portal"><div class="dashboard-grid"></div></div>
+        <div id="AgenteVirtual" class="tab-content" data-category="AgenteVirtual"><div class="dashboard-grid"></div></div>
     </main>
 
     <footer class="footer">
@@ -56,7 +49,6 @@
     </footer>
 
     <script>
-        // URL da sua planilha publicada como CSV
         const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQABegimqKLEvVVUJ7SyvJAYTbY4uoaDAYBnC-VCG8qO3YXfarwbxkSUr0P_c1VYBsHYce3ZKdOQoy5/pub?output=csv';
 
         document.addEventListener('DOMContentLoaded', function( ) {
@@ -69,12 +61,38 @@
                 })
                 .catch(error => {
                     console.error('Erro ao buscar dados da planilha:', error);
-                    document.querySelector('#Todos .loading-message').textContent = 'Erro ao carregar dashboards. Verifique o link da planilha.';
+                    document.querySelector('#Todos .loading-message').textContent = 'Erro ao carregar dashboards.';
                 });
+            
+            // Lógica do Modo Escuro
+            const themeSwitcher = document.querySelector('.theme-switcher');
+            const themeIcon = document.getElementById('theme-toggle-icon');
+            const sunIconPath = '<path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path><circle cx="12" cy="12" r="5"></circle>';
+            const moonIconPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeIcon.innerHTML = sunIconPath;
+            } else {
+                themeIcon.innerHTML = moonIconPath;
+            }
+
+            themeSwitcher.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                let theme = 'light';
+                if (document.body.classList.contains('dark-mode')) {
+                    theme = 'dark';
+                    themeIcon.innerHTML = sunIconPath;
+                } else {
+                    themeIcon.innerHTML = moonIconPath;
+                }
+                localStorage.setItem('theme', theme);
+            });
         });
 
         function parseCSV(text) {
-            const rows = text.split(/\r\n|\n/).slice(1); // Ignora o cabeçalho
+            const rows = text.split(/\r\n|\n/).slice(1);
             return rows.map(row => {
                 const values = row.split(',');
                 return {
@@ -83,7 +101,7 @@
                     Link: values[2] ? values[2].trim() : '#',
                     Categoria: values[3] ? values[3].trim() : 'Outros'
                 };
-            }).filter(item => item.Nome); // Garante que apenas linhas com nome sejam processadas
+            }).filter(item => item.Nome);
         }
 
         function createDashboardCard(item) {
@@ -102,15 +120,12 @@
 
         function populateDashboards(data) {
             const todosGrid = document.querySelector('#Todos .dashboard-grid');
-            todosGrid.innerHTML = ''; // Limpa a mensagem de "carregando"
+            todosGrid.innerHTML = '';
 
             data.forEach(item => {
                 const cardHTML = createDashboardCard(item);
-                // Adiciona a todos
                 todosGrid.innerHTML += cardHTML;
-
-                // Adiciona à categoria específica
-                const categoryId = item.Categoria.replace(/\s+/g, ''); // Remove espaços para bater com o ID
+                const categoryId = item.Categoria.replace(/\s+/g, '');
                 const categoryGrid = document.querySelector(`#${categoryId} .dashboard-grid`);
                 if (categoryGrid) {
                     categoryGrid.innerHTML += cardHTML;
@@ -124,16 +139,12 @@
             let current = 0;
             const duration = 1000;
             let start = null;
-
             function step(timestamp) {
                 if (!start) start = timestamp;
                 const progress = Math.min((timestamp - start) / duration, 1);
                 counterElement.innerText = Math.floor(progress * target);
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                } else {
-                    counterElement.innerText = target;
-                }
+                if (progress < 1) { window.requestAnimationFrame(step); }
+                else { counterElement.innerText = target; }
             }
             window.requestAnimationFrame(step);
         }
@@ -141,42 +152,14 @@
         function openTab(evt, tabName) {
             const tabcontent = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
-
             const tablinks = document.getElementsByClassName("tab-link");
             for (let i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
-
             document.getElementById(tabName).style.display = "block";
-            
             if (evt) {
                 evt.currentTarget.className += " active";
             } else {
                 document.querySelector('.tab-link[onclick*="\'Todos\'"]').className += " active";
             }
-
-            const searchBox = document.getElementById('searchBox');
-            searchBox.value = '';
-            const activeTabText = document.querySelector('.tab-link.active').textContent;
-            searchBox.placeholder = tabName === 'Todos' ? 'Buscar em todos os dashboards...' : `Buscar em ${activeTabText}...`;
-            filterCards();
-        }
-
-        function filterCards() {
-            const filter = document.getElementById('searchBox').value.toUpperCase();
-            const activeTab = document.querySelector('.tab-content.active');
-            if (!activeTab) return;
-            
-            const cards = activeTab.querySelectorAll('.dashboard-card');
-            cards.forEach(card => {
-                const title = card.querySelector('h3');
-                const description = card.querySelector('p');
-                const textValue = (title.textContent || title.innerText) + (description.textContent || description.innerText);
-                
-                if (textValue.toUpperCase().indexOf(filter) > -1) {
-                    card.style.display = "flex";
-                } else {
-                    card.style.display = "none";
-                }
-            });
         }
     </script>
 
