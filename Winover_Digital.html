@@ -22,7 +22,7 @@
         .header {
             background-color: var(--roxo-principal);
             color: var(--branco);
-            padding: 2rem 1.5rem;
+            padding: 2.5rem 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -30,14 +30,17 @@
             text-align: center;
             border-bottom: 5px solid var(--azul-secundario);
         }
-        .header-logo svg {
-            height: 45px;
-            width: auto;
-            margin-bottom: 1rem;
-            fill: var(--branco);
+        .header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
-        .header h1 { margin: 0; font-size: 2.2rem; font-weight: 700; }
-        .header p { margin: 0.25rem 0 0; font-size: 1.1rem; opacity: 0.9; }
+        .header p {
+            margin: 0.5rem 0 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
         .container { max-width: 1300px; margin: 2.5rem auto; padding: 0 1.5rem; }
         
         .summary-container {
@@ -57,7 +60,7 @@
         .summary-container .counter {
             font-size: 3.5rem;
             font-weight: 700;
-            color: var(--roxo-principal); /* Alterado de laranja para roxo */
+            color: var(--roxo-principal);
             line-height: 1.1;
         }
 
@@ -118,7 +121,7 @@
             display: inline-block;
         }
         .card-action a:hover {
-            background-color: var(--roxo-principal); /* Alterado de laranja para roxo */
+            background-color: var(--roxo-principal);
             transform: scale(1.05);
         }
         .footer { text-align: center; padding: 2rem 1.5rem; margin-top: 2rem; background-color: var(--cinza-escuro); color: var(--cinza-claro); }
@@ -128,9 +131,6 @@
 <body>
 
     <header class="header">
-        <div class="header-logo">
-            <svg viewBox="0 0 1033 306" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M29.7 217.5c-6.5 0-11.8-5.3-11.8-11.8 0-6.5 5.3-11.8 11.8-11.8s11.8 5.3 11.8 11.8c0 6.5-5.3 11.8-11.8 11.8zM59.6 90.1L0 294h34.8L76.7 178l41.9 116h34.8L90.1 90.1H59.6zM384.1 90.1h-34.8L285 294h34.8l17.4-58.3h60.4l17.4 58.3h34.8L384.1 90.1zm-47.4 114.4l22.7-68.4 22.7 68.4h-45.4zM554.7 90.1l-64.8 203.9h34.8l17.4-58.3h60.4l17.4 58.3h34.8l-64.8-203.9H554.7zm-47.4 114.4l22.7-68.4 22.7 68.4h-45.4zM744.7 90.1l-42.1 127.3-42.1-127.3h-34.8l59.6 203.9h34.8l59.6-203.9h-34.8zM890.1 90.1l-76.3 102v-102h-34.8v203.9h26.2l79.9-107.3v107.3h34.8V90.1h-30zM1033 90.1L955.1 294h34.8l74.2-176.5v176.5h34.8V90.1h-59.5zM207.4 90.1c-38.9 0-70.4 31.5-70.4 70.4s31.5 70.4 70.4 70.4 70.4-31.5 70.4-70.4-31.5-70.4-70.4-70.4zm0 109.6c-21.5 0-39.1-17.5-39.1-39.1s17.5-39.1 39.1-39.1 39.1 17.5 39.1 39.1-17.6 39.1-39.1 39.1z" fill-rule="nonzero"/></svg>
-        </div>
         <h1>Winover Digital</h1>
         <p>Portal de Business Intelligence</p>
     </header>
@@ -143,7 +143,7 @@
 
         <div class="controls-container">
             <div class="tabs">
-                <button class="tab-link active" onclick="openTab(event, 'Todos' )">Todos</button>
+                <button class="tab-link active" onclick="openTab(event, 'Todos')">Todos</button>
                 <button class="tab-link" onclick="openTab(event, 'Operacoes')">Operações</button>
                 <button class="tab-link" onclick="openTab(event, 'Financeiro')">Financeiro</button>
                 <button class="tab-link" onclick="openTab(event, 'Vendas')">Vendas</button>
@@ -213,14 +213,14 @@
             });
 
             animateCounter();
-            openTab(null, 'Todos');
+            // A chamada para openTab foi removida daqui para evitar o erro
         });
 
         function animateCounter() {
             const counterElement = document.getElementById('bi-counter');
             const target = document.querySelectorAll('#Todos .dashboard-card').length;
             let current = 0;
-            const duration = 1000; // 1 segundo para a animação
+            const duration = 1000;
             let start = null;
 
             function step(timestamp) {
@@ -246,12 +246,14 @@
             if (evt) {
                 evt.currentTarget.className += " active";
             } else {
+                // Seleciona a aba "Todos" por padrão de forma segura
                 document.querySelector('.tab-link[onclick*="\'Todos\'"]').className += " active";
             }
 
             const searchBox = document.getElementById('searchBox');
             searchBox.value = '';
-            searchBox.placeholder = tabName === 'Todos' ? 'Buscar em todos os dashboards...' : `Buscar em ${document.querySelector(`.tab-link.active`).textContent}...`;
+            const activeTabText = document.querySelector('.tab-link.active').textContent;
+            searchBox.placeholder = tabName === 'Todos' ? 'Buscar em todos os dashboards...' : `Buscar em ${activeTabText}...`;
             filterCards();
         }
 
@@ -273,6 +275,11 @@
                 }
             });
         }
+        
+        // Garante que a primeira aba seja aberta após o carregamento completo da página
+        window.onload = function() {
+            openTab(null, 'Todos');
+        };
     </script>
 
 </body>
