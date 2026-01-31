@@ -1,30 +1,34 @@
-/* Definição das variáveis de cor para os temas claro e escuro */
+/* Definição das variáveis de cor para os temas claro e escuro com a nova paleta */
 :root {
-    --roxo-principal: #472D96;
-    --azul-secundario: #1171C4;
-    
+    /* Nova Paleta Monocromática */
+    --azul-1: #31547D;
+    --azul-2-escuro: #052D59;
+    --azul-3-principal: #184880;
+    --azul-4-vibrante: #0974ED;
+    --azul-5-medio: #28476B;
+
     /* Tema Claro */
-    --bg-color: #ECF0F1;
+    --bg-color: #f0f4f8; /* Um cinza-azulado muito claro */
     --card-bg-color: #ffffff;
-    --text-color: #2C3E50;
-    --text-muted-color: #555;
-    --header-bg-color: var(--roxo-principal);
+    --text-color: #052D59; /* Texto principal usa o tom mais escuro */
+    --text-muted-color: #31547D;
+    --header-bg-color: var(--azul-2-escuro);
     --header-text-color: #ffffff;
-    --footer-bg-color: #2C3E50;
-    --footer-text-color: #ECF0F1;
-    --shadow-color: rgba(0, 0, 0, 0.08);
+    --footer-bg-color: var(--azul-2-escuro);
+    --footer-text-color: #f0f4f8;
+    --shadow-color: rgba(5, 45, 89, 0.1); /* Sombra baseada no azul escuro */
 }
 
 body.dark-mode {
     /* Tema Escuro */
-    --bg-color: #1a1a2e;
-    --card-bg-color: #16213e;
+    --bg-color: #0a1929; /* Fundo bem escuro, quase preto-azulado */
+    --card-bg-color: #0e2a47;
     --text-color: #e0e1dd;
-    --text-muted-color: #a9b4c2;
-    --header-bg-color: #0f3460;
-    --header-text-color: #e94560;
-    --footer-bg-color: #0f3460;
-    --footer-text-color: #a9b4c2;
+    --text-muted-color: #8892b0;
+    --header-bg-color: #052D59;
+    --header-text-color: #ffffff;
+    --footer-bg-color: #052D59;
+    --footer-text-color: #8892b0;
     --shadow-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -64,7 +68,7 @@ body {
     color: var(--header-text-color);
     padding: 2.5rem 1.5rem;
     text-align: center;
-    border-bottom: 5px solid var(--azul-secundario);
+    border-bottom: 5px solid var(--azul-4-vibrante); /* Borda com o azul vibrante */
     transition: background-color 0.3s, color 0.3s;
 }
 .header h1 { margin: 0; font-size: 2.8rem; font-weight: 700; letter-spacing: 1px; }
@@ -91,18 +95,19 @@ body {
 .summary-container .counter {
     font-size: 3.5rem;
     font-weight: 700;
-    color: var(--roxo-principal);
+    color: var(--azul-3-principal); /* Cor do contador */
     line-height: 1.1;
+    transition: color 0.3s;
 }
 body.dark-mode .summary-container .counter {
-    color: var(--header-text-color); /* Cor de destaque no modo escuro */
+    color: var(--azul-4-vibrante);
 }
 
 .controls-container { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem; }
 .tabs { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
 .tab-link {
     padding: 0.7rem 1.5rem;
-    border: none;
+    border: 1px solid var(--azul-1); /* Borda sutil */
     background-color: var(--card-bg-color);
     color: var(--text-color);
     cursor: pointer;
@@ -114,12 +119,9 @@ body.dark-mode .summary-container .counter {
 }
 .tab-link:hover { background-color: var(--bg-color); }
 .tab-link.active {
-    background-color: var(--azul-secundario);
-    color: var(--branco);
-    box-shadow: 0 4px 8px rgba(17, 113, 196, 0.2);
-}
-body.dark-mode .tab-link.active {
-    color: #fff;
+    background-color: var(--azul-4-vibrante);
+    color: #ffffff;
+    border-color: var(--azul-4-vibrante);
 }
 
 .tab-content { display: none; }
@@ -135,7 +137,7 @@ body.dark-mode .tab-link.active {
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
     display: flex;
     flex-direction: column;
-    border-left: 5px solid var(--roxo-principal);
+    border-left: 5px solid var(--azul-3-principal);
 }
 .dashboard-card:hover { transform: translateY(-6px); box-shadow: 0 8px 20px var(--shadow-color); }
 .card-content { padding: 1.5rem; flex-grow: 1; }
@@ -143,11 +145,11 @@ body.dark-mode .tab-link.active {
     margin-top: 0;
     margin-bottom: 0.75rem;
     font-size: 1.3rem;
-    color: var(--roxo-principal);
+    color: var(--azul-2-escuro);
     transition: color 0.3s;
 }
 body.dark-mode .card-content h3 {
-    color: var(--header-text-color);
+    color: var(--text-color);
 }
 .card-content p {
     margin: 0;
@@ -165,8 +167,8 @@ body.dark-mode .card-content h3 {
 }
 .card-action a {
     text-decoration: none;
-    color: var(--branco);
-    background-color: var(--azul-secundario);
+    color: #ffffff;
+    background-color: var(--azul-4-vibrante);
     padding: 0.6rem 1.2rem;
     border-radius: 5px;
     font-weight: 600;
@@ -174,11 +176,8 @@ body.dark-mode .card-content h3 {
     display: inline-block;
 }
 .card-action a:hover {
-    background-color: var(--roxo-principal);
+    background-color: var(--azul-5-medio);
     transform: scale(1.05);
-}
-body.dark-mode .card-action a:hover {
-    background-color: var(--header-text-color);
 }
 
 .footer {
