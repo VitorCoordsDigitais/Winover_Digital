@@ -1,54 +1,92 @@
+/* Definição das variáveis de cor para os temas claro e escuro */
 :root {
     --roxo-principal: #472D96;
     --azul-secundario: #1171C4;
-    --cinza-escuro: #2C3E50;
-    --cinza-claro: #ECF0F1;
-    --branco: #ffffff;
+    
+    /* Tema Claro */
+    --bg-color: #ECF0F1;
+    --card-bg-color: #ffffff;
+    --text-color: #2C3E50;
+    --text-muted-color: #555;
+    --header-bg-color: var(--roxo-principal);
+    --header-text-color: #ffffff;
+    --footer-bg-color: #2C3E50;
+    --footer-text-color: #ECF0F1;
     --shadow-color: rgba(0, 0, 0, 0.08);
 }
+
+body.dark-mode {
+    /* Tema Escuro */
+    --bg-color: #1a1a2e;
+    --card-bg-color: #16213e;
+    --text-color: #e0e1dd;
+    --text-muted-color: #a9b4c2;
+    --header-bg-color: #0f3460;
+    --header-text-color: #e94560;
+    --footer-bg-color: #0f3460;
+    --footer-text-color: #a9b4c2;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
-    background-color: var(--cinza-claro);
-    color: var(--cinza-escuro);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
 }
-.header {
-    background-color: var(--roxo-principal);
-    color: var(--branco);
-    padding: 2.5rem 1.5rem;
+
+/* Botão de Modo Escuro */
+.theme-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    z-index: 1000;
+    transition: background-color 0.3s, color 0.3s;
+}
+.theme-switcher svg {
+    width: 20px;
+    height: 20px;
+}
+
+.header {
+    background-color: var(--header-bg-color);
+    color: var(--header-text-color);
+    padding: 2.5rem 1.5rem;
     text-align: center;
     border-bottom: 5px solid var(--azul-secundario);
+    transition: background-color 0.3s, color 0.3s;
 }
-.header h1 {
-    margin: 0;
-    font-size: 2.8rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-.header p {
-    margin: 0.5rem 0 0;
-    font-size: 1.2rem;
-    opacity: 0.9;
-}
+.header h1 { margin: 0; font-size: 2.8rem; font-weight: 700; letter-spacing: 1px; }
+.header p { margin: 0.5rem 0 0; font-size: 1.2rem; opacity: 0.9; }
+
 .container { max-width: 1300px; margin: 2.5rem auto; padding: 0 1.5rem; }
 
 .summary-container {
-    background-color: var(--branco);
+    background-color: var(--card-bg-color);
     border-radius: 12px;
     padding: 1.5rem;
     text-align: center;
     margin-bottom: 2.5rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 15px var(--shadow-color);
+    transition: background-color 0.3s;
 }
 .summary-container h2 {
     margin: 0 0 0.5rem 0;
     font-size: 1.2rem;
-    color: var(--cinza-escuro);
+    color: var(--text-color);
     font-weight: 600;
+    transition: color 0.3s;
 }
 .summary-container .counter {
     font-size: 3.5rem;
@@ -56,14 +94,17 @@ body {
     color: var(--roxo-principal);
     line-height: 1.1;
 }
+body.dark-mode .summary-container .counter {
+    color: var(--header-text-color); /* Cor de destaque no modo escuro */
+}
 
 .controls-container { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem; }
 .tabs { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
 .tab-link {
     padding: 0.7rem 1.5rem;
     border: none;
-    background-color: var(--branco);
-    color: var(--cinza-escuro);
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
     cursor: pointer;
     border-radius: 8px;
     font-size: 1rem;
@@ -71,38 +112,57 @@ body {
     transition: all 0.3s ease;
     box-shadow: 0 2px 4px var(--shadow-color);
 }
-.tab-link:hover { background-color: #f5f5f5; color: var(--roxo-principal); }
-.tab-link.active { background-color: var(--azul-secundario); color: var(--branco); box-shadow: 0 4px 8px rgba(17, 113, 196, 0.2); }
-.search-container { display: flex; justify-content: center; }
-.search-box {
-    width: 100%;
-    max-width: 500px;
-    padding: 0.8rem 1.2rem;
-    font-size: 1rem;
-    border-radius: 50px;
-    border: 2px solid #dfe1e5;
-    box-shadow: 0 2px 5px var(--shadow-color);
-    transition: all 0.3s ease;
+.tab-link:hover { background-color: var(--bg-color); }
+.tab-link.active {
+    background-color: var(--azul-secundario);
+    color: var(--branco);
+    box-shadow: 0 4px 8px rgba(17, 113, 196, 0.2);
 }
-.search-box:focus { outline: none; border-color: var(--azul-secundario); box-shadow: 0 4px 12px rgba(17, 113, 196, 0.2); }
+body.dark-mode .tab-link.active {
+    color: #fff;
+}
+
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+.loading-message { font-style: italic; }
+
 .dashboard-card {
-    background-color: var(--branco);
+    background-color: var(--card-bg-color);
     border-radius: 12px;
     box-shadow: 0 4px 10px var(--shadow-color);
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
     display: flex;
     flex-direction: column;
     border-left: 5px solid var(--roxo-principal);
 }
 .dashboard-card:hover { transform: translateY(-6px); box-shadow: 0 8px 20px var(--shadow-color); }
 .card-content { padding: 1.5rem; flex-grow: 1; }
-.card-content h3 { margin-top: 0; margin-bottom: 0.75rem; font-size: 1.3rem; color: var(--roxo-principal); }
-.card-content p { margin: 0; color: #555; font-size: 0.95rem; line-height: 1.5; }
-.card-action { padding: 1rem 1.5rem; background-color: #fdfdfd; border-top: 1px solid var(--cinza-claro); text-align: right; }
+.card-content h3 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: 1.3rem;
+    color: var(--roxo-principal);
+    transition: color 0.3s;
+}
+body.dark-mode .card-content h3 {
+    color: var(--header-text-color);
+}
+.card-content p {
+    margin: 0;
+    color: var(--text-muted-color);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    transition: color 0.3s;
+}
+.card-action {
+    padding: 1rem 1.5rem;
+    background-color: transparent;
+    border-top: 1px solid var(--bg-color);
+    text-align: right;
+    transition: border-color 0.3s;
+}
 .card-action a {
     text-decoration: none;
     color: var(--branco);
@@ -117,5 +177,16 @@ body {
     background-color: var(--roxo-principal);
     transform: scale(1.05);
 }
-.footer { text-align: center; padding: 2rem 1.5rem; margin-top: 2rem; background-color: var(--cinza-escuro); color: var(--cinza-claro); }
+body.dark-mode .card-action a:hover {
+    background-color: var(--header-text-color);
+}
+
+.footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    margin-top: 2rem;
+    background-color: var(--footer-bg-color);
+    color: var(--footer-text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
 .footer p { margin: 0; }
