@@ -21,7 +21,6 @@
 
         <div class="controls-container">
             <div class="tabs">
-                <!-- CATEGORIAS ATUALIZADAS AQUI -->
                 <button class="tab-link active" onclick="openTab(event, 'Todos')">Todos</button>
                 <button class="tab-link" onclick="openTab(event, 'WhatsApp')">WhatsApp</button>
                 <button class="tab-link" onclick="openTab(event, 'Portal')">Portal</button>
@@ -32,33 +31,23 @@
             </div>
         </div>
 
+        <!-- As seções abaixo serão preenchidas dinamicamente pelo script -->
         <div id="Todos" class="tab-content active">
             <div class="dashboard-grid">
-                <!-- Conteúdo de todos os BIs será inserido aqui via JavaScript -->
+                <p class="loading-message">Carregando dashboards...</p>
             </div>
         </div>
 
-        <!-- ESTRUTURA DAS NOVAS CATEGORIAS -->
         <div id="WhatsApp" class="tab-content" data-category="WhatsApp">
-            <div class="dashboard-grid">
-                <!-- Exemplo de Card - Adicione os dashboards de WhatsApp aqui -->
-                <div class="dashboard-card">
-                    <div class="card-content"><h3>Exemplo: Atendimentos WhatsApp</h3><p>Análise de conversas, tempo de resposta e satisfação no canal WhatsApp.</p></div>
-                    <div class="card-action"><a href="#" target="_blank">Acessar BI</a></div>
-                </div>
-            </div>
+            <div class="dashboard-grid"></div>
         </div>
 
         <div id="Portal" class="tab-content" data-category="Portal">
-            <div class="dashboard-grid">
-                <!-- Adicione os dashboards de Portal aqui -->
-            </div>
+            <div class="dashboard-grid"></div>
         </div>
 
         <div id="AgenteVirtual" class="tab-content" data-category="Agente Virtual">
-            <div class="dashboard-grid">
-                <!-- Adicione os dashboards de Agente Virtual aqui -->
-            </div>
+            <div class="dashboard-grid"></div>
         </div>
     </main>
 
@@ -67,29 +56,71 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const allCards = [];
-            const categoryTabs = document.querySelectorAll('.tab-content[data-category]');
-            
-            categoryTabs.forEach(tab => {
-                const cards = tab.querySelectorAll('.dashboard-card');
-                cards.forEach(card => {
-                    allCards.push(card.cloneNode(true));
+        // URL da sua planilha publicada como CSV
+        const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQABegimqKLEvVVUJ7SyvJAYTbY4uoaDAYBnC-VCG8qO3YXfarwbxkSUr0P_c1VYBsHYce3ZKdOQoy5/pub?output=csv';
+
+        document.addEventListener('DOMContentLoaded', function( ) {
+            fetch(SPREADSHEET_URL)
+                .then(response => response.text())
+                .then(csvText => {
+                    const data = parseCSV(csvText);
+                    populateDashboards(data);
+                    openTab(null, 'Todos');
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dados da planilha:', error);
+                    document.querySelector('#Todos .loading-message').textContent = 'Erro ao carregar dashboards. Verifique o link da planilha.';
                 });
-            });
-
-            const todosGrid = document.querySelector('#Todos .dashboard-grid');
-            allCards.forEach(card => {
-                todosGrid.appendChild(card);
-            });
-
-            animateCounter();
-            openTab(null, 'Todos');
         });
 
-        function animateCounter() {
+        function parseCSV(text) {
+            const rows = text.split(/\r\n|\n/).slice(1); // Ignora o cabeçalho
+            return rows.map(row => {
+                const values = row.split(',');
+                return {
+                    Nome: values[0] ? values[0].trim() : '',
+                    Descricao: values[1] ? values[1].trim() : '',
+                    Link: values[2] ? values[2].trim() : '#',
+                    Categoria: values[3] ? values[3].trim() : 'Outros'
+                };
+            }).filter(item => item.Nome); // Garante que apenas linhas com nome sejam processadas
+        }
+
+        function createDashboardCard(item) {
+            return `
+                <div class="dashboard-card">
+                    <div class="card-content">
+                        <h3>${item.Nome}</h3>
+                        <p>${item.Descricao}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="${item.Link}" target="_blank">Acessar BI</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function populateDashboards(data) {
+            const todosGrid = document.querySelector('#Todos .dashboard-grid');
+            todosGrid.innerHTML = ''; // Limpa a mensagem de "carregando"
+
+            data.forEach(item => {
+                const cardHTML = createDashboardCard(item);
+                // Adiciona a todos
+                todosGrid.innerHTML += cardHTML;
+
+                // Adiciona à categoria específica
+                const categoryId = item.Categoria.replace(/\s+/g, ''); // Remove espaços para bater com o ID
+                const categoryGrid = document.querySelector(`#${categoryId} .dashboard-grid`);
+                if (categoryGrid) {
+                    categoryGrid.innerHTML += cardHTML;
+                }
+            });
+            animateCounter(data.length);
+        }
+        
+        function animateCounter(target) {
             const counterElement = document.getElementById('bi-counter');
-            const target = document.querySelectorAll('#Todos .dashboard-card').length;
             let current = 0;
             const duration = 1000;
             let start = null;
@@ -100,6 +131,8 @@
                 counterElement.innerText = Math.floor(progress * target);
                 if (progress < 1) {
                     window.requestAnimationFrame(step);
+                } else {
+                    counterElement.innerText = target;
                 }
             }
             window.requestAnimationFrame(step);
