@@ -37,95 +37,79 @@ body {
 }
 
 .theme-switcher {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    background-color: var(--card-bg-color);
-    color: var(--text-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 10px var(--shadow-color);
-    z-index: 1000;
+    position: fixed; top: 20px; right: 20px; width: 40px; height: 40px;
+    background-color: var(--card-bg-color); color: var(--text-color);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 2px 10px var(--shadow-color); z-index: 1000;
     transition: background-color 0.3s, color 0.3s;
 }
 .theme-switcher svg { width: 20px; height: 20px; }
 
 .header {
-    position: relative; /* Necessário para o z-index funcionar */
-    background-color: var(--header-bg-color);
-    color: var(--header-text-color);
-    padding: 4rem 1.5rem; /* Aumentado para dar espaço à animação */
-    text-align: center;
-    border-bottom: 5px solid var(--azul-4-vibrante);
-    transition: background-color 0.3s, color 0.3s;
+    position: relative; background-color: var(--header-bg-color); color: var(--header-text-color);
+    padding: 4rem 1.5rem; text-align: center;
+    border-bottom: 5px solid var(--azul-4-vibrante); transition: background-color 0.3s, color 0.3s;
     overflow: hidden;
 }
-#particles-js {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-.header-content {
-    position: relative;
-    z-index: 2;
-}
+.header-content { position: relative; z-index: 2; }
 .header h1 { margin: 0; font-size: 2.8rem; font-weight: 700; letter-spacing: 1px; }
 .header p { margin: 0.5rem 0 0; font-size: 1.2rem; opacity: 0.9; }
+
+/* Animação de Fundo CSS */
+.bg-animation { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+#stars, #stars2, #stars3 {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 50%;
+    background: transparent;
+}
+#stars {
+    width: 1px; height: 1px;
+    box-shadow: 50vw 80vh 2px #fff, 10vw 20vh 1px #fff, 80vw 30vh 2px #fff, 30vw 90vh 1px #fff, 60vw 10vh 2px #fff, 40vw 50vh 1px #fff, 90vw 70vh 2px #fff, 20vw 40vh 1px #fff;
+    animation: animStar 150s linear infinite;
+}
+#stars2 {
+    width: 2px; height: 2px;
+    box-shadow: 20vw 50vh 3px #fff, 70vw 10vh 4px #fff, 90vw 40vh 3px #fff, 40vw 80vh 4px #fff, 10vw 90vh 3px #fff;
+    animation: animStar 100s linear infinite;
+}
+#stars3 {
+    width: 3px; height: 3px;
+    box-shadow: 80vw 70vh 5px #fff, 50vw 20vh 6px #fff, 30vw 60vh 5px #fff;
+    animation: animStar 50s linear infinite;
+}
+
+@keyframes animStar {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-2000px); }
+}
 
 .container { max-width: 1300px; margin: 2.5rem auto; padding: 0 1.5rem; }
 
 .summary-container {
-    background-color: var(--card-bg-color);
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-align: center;
-    margin-bottom: 2.5rem;
-    box-shadow: 0 4px 15px var(--shadow-color);
+    background-color: var(--card-bg-color); border-radius: 12px; padding: 1.5rem;
+    text-align: center; margin-bottom: 2.5rem; box-shadow: 0 4px 15px var(--shadow-color);
     transition: background-color 0.3s;
 }
 .summary-container h2 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.2rem;
-    color: var(--text-color);
-    font-weight: 600;
-    transition: color 0.3s;
+    margin: 0 0 0.5rem 0; font-size: 1.2rem; color: var(--text-color);
+    font-weight: 600; transition: color 0.3s;
 }
 .summary-container .counter {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: var(--azul-3-principal);
-    line-height: 1.1;
-    transition: color 0.3s;
+    font-size: 3.5rem; font-weight: 700; color: var(--azul-3-principal);
+    line-height: 1.1; transition: color 0.3s;
 }
 body.dark-mode .summary-container .counter { color: var(--azul-4-vibrante); }
 
 .controls-container { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem; }
 .tabs { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
 .tab-link {
-    padding: 0.7rem 1.5rem;
-    border: 1px solid var(--azul-1);
-    background-color: var(--card-bg-color);
-    color: var(--text-color);
-    cursor: pointer;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px var(--shadow-color);
+    padding: 0.7rem 1.5rem; border: 1px solid var(--azul-1); background-color: var(--card-bg-color);
+    color: var(--text-color); cursor: pointer; border-radius: 8px; font-size: 1rem;
+    font-weight: 600; transition: all 0.3s ease; box-shadow: 0 2px 4px var(--shadow-color);
 }
 .tab-link:hover { background-color: var(--bg-color); }
 .tab-link.active {
-    background-color: var(--azul-4-vibrante);
-    color: #ffffff;
-    border-color: var(--azul-4-vibrante);
+    background-color: var(--azul-4-vibrante); color: #ffffff; border-color: var(--azul-4-vibrante);
 }
 
 .tab-content { display: none; }
@@ -133,94 +117,49 @@ body.dark-mode .summary-container .counter { color: var(--azul-4-vibrante); }
 .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
 .loading-message { font-style: italic; }
 
-/* Animação em Cascata e Efeito Glow */
 .dashboard-card {
-    background-color: var(--card-bg-color);
-    border-radius: 12px;
-    box-shadow: 0 4px 10px var(--shadow-color);
-    overflow: hidden;
+    background-color: var(--card-bg-color); border-radius: 12px;
+    box-shadow: 0 4px 10px var(--shadow-color); overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
-    display: flex;
-    flex-direction: column;
-    border-left: 5px solid var(--azul-3-principal);
-    opacity: 0; /* Começa invisível para a animação */
-    animation: fadeIn 0.5s ease-out forwards;
-    position: relative; /* Para o efeito glow */
+    display: flex; flex-direction: column; border-left: 5px solid var(--azul-3-principal);
+    opacity: 0; animation: fadeIn 0.5s ease-out forwards; position: relative;
 }
-.dashboard-card::before { /* Elemento para o efeito glow */
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 12px;
-    border: 2px solid transparent;
-    transition: border-color 0.3s ease-out;
+.dashboard-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 12px; border: 2px solid transparent; transition: border-color 0.3s ease-out;
 }
-.dashboard-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 20px var(--shadow-color);
-}
-.dashboard-card:hover::before {
-    border-color: var(--azul-4-vibrante);
-}
+.dashboard-card:hover { transform: translateY(-6px); box-shadow: 0 8px 20px var(--shadow-color); }
+.dashboard-card:hover::before { border-color: var(--azul-4-vibrante); }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .card-content { padding: 1.5rem; flex-grow: 1; }
 .card-content h3 {
-    margin-top: 0;
-    margin-bottom: 0.75rem;
-    font-size: 1.3rem;
-    color: var(--azul-2-escuro);
-    transition: color 0.3s;
+    margin-top: 0; margin-bottom: 0.75rem; font-size: 1.3rem;
+    color: var(--azul-2-escuro); transition: color 0.3s;
 }
 body.dark-mode .card-content h3 { color: var(--text-color); }
 .card-content p {
-    margin: 0;
-    color: var(--text-muted-color);
-    font-size: 0.95rem;
-    line-height: 1.5;
-    transition: color 0.3s;
+    margin: 0; color: var(--text-muted-color); font-size: 0.95rem;
+    line-height: 1.5; transition: color 0.3s;
 }
 .card-action {
-    padding: 1rem 1.5rem;
-    background-color: transparent;
-    border-top: 1px solid var(--bg-color);
-    text-align: right;
-    transition: border-color 0.3s;
+    padding: 1rem 1.5rem; background-color: transparent;
+    border-top: 1px solid var(--bg-color); text-align: right; transition: border-color 0.3s;
 }
 .card-action a {
-    text-decoration: none;
-    color: #ffffff;
-    background-color: var(--azul-4-vibrante);
-    padding: 0.6rem 1.2rem;
-    border-radius: 5px;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    display: inline-block;
+    text-decoration: none; color: #ffffff; background-color: var(--azul-4-vibrante);
+    padding: 0.6rem 1.2rem; border-radius: 5px; font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease; display: inline-block;
 }
-.card-action a:hover {
-    background-color: var(--azul-5-medio);
-    transform: scale(1.05);
-}
+.card-action a:hover { background-color: var(--azul-5-medio); transform: scale(1.05); }
 
 .footer {
-    text-align: center;
-    padding: 2rem 1.5rem;
-    margin-top: 2rem;
-    background-color: var(--footer-bg-color);
-    color: var(--footer-text-color);
+    text-align: center; padding: 2rem 1.5rem; margin-top: 2rem;
+    background-color: var(--footer-bg-color); color: var(--footer-text-color);
     transition: background-color 0.3s, color 0.3s;
 }
 .footer p { margin: 0; }
