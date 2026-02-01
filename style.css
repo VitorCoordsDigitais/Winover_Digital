@@ -447,3 +447,424 @@ body {
     66% { content: '⠙⠸⠄⠆⠇⠋'; }
     83% { content: '⠸⠄⠆⠇⠋⠙'; }
 }
+
+/* ========================================
+   RESPONSIVE - TABLETS (até 1024px)
+   ======================================== */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 90%;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .header p {
+        font-size: 1rem;
+    }
+
+    .counter {
+        font-size: 4.5rem;
+    }
+
+    .summary-container h2 {
+        font-size: 1rem;
+    }
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE GRANDE (768px - 1023px)
+   ======================================== */
+@media (max-width: 768px) {
+    .container {
+        max-width: 95%;
+        margin: 1.5rem auto;
+        padding: 0 1rem;
+    }
+
+    /* Header Mobile */
+    .header {
+        padding: 2rem 1rem;
+    }
+
+    .header h1 {
+        font-size: 1.75rem;
+    }
+
+    .header p {
+        font-size: 0.95rem;
+    }
+
+    /* Summary Container Mobile */
+    .summary-container {
+        padding: 1.5rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .summary-container h2 {
+        font-size: 0.95rem;
+        letter-spacing: 1px;
+    }
+
+    .counter {
+        font-size: 4rem;
+        margin: 0.5rem 0;
+    }
+
+    /* Tabs Mobile - Scroll Horizontal */
+    .tabs {
+        gap: 0.25rem;
+        padding: 0.4rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
+    }
+
+    .tab-link {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .tab-link i {
+        margin-right: 0.4rem;
+    }
+
+    .tab-link span {
+        display: none;
+    }
+
+    .tab-link.active span {
+        display: inline;
+    }
+
+    /* Grid Mobile - 1 coluna em smartphones */
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    /* Cards Mobile */
+    .dashboard-card {
+        padding: 1.2rem;
+        border-radius: 10px;
+    }
+
+    .card-content h3 {
+        font-size: 1.1rem;
+    }
+
+    .card-content p {
+        font-size: 0.9rem;
+    }
+
+    .card-action a {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    /* Theme Switcher Mobile */
+    .theme-switcher {
+        width: 40px;
+        height: 40px;
+        top: 15px;
+        right: 15px;
+    }
+
+    .theme-switcher svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Footer Mobile */
+    .footer {
+        padding: 1.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .loading-message {
+        font-size: 1rem;
+        padding: 2rem 1rem;
+    }
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE PEQUENO (480px - 767px)
+   ======================================== */
+@media (max-width: 480px) {
+    .container {
+        max-width: 100%;
+        margin: 1rem auto;
+        padding: 0 0.75rem;
+    }
+
+    /* Header Extra Pequeno */
+    .header {
+        padding: 1.5rem 0.75rem;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+        letter-spacing: -0.5px;
+    }
+
+    .header p {
+        font-size: 0.85rem;
+        margin-top: 0.3rem;
+    }
+
+    /* Summary Container Extra Pequeno */
+    .summary-container {
+        padding: 1.2rem 0.75rem;
+        margin-bottom: 1.2rem;
+        border-radius: 12px;
+    }
+
+    .summary-container h2 {
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+        letter-spacing: 0.8px;
+    }
+
+    .counter {
+        font-size: 3.5rem;
+        margin: 0.3rem 0;
+    }
+
+    /* Controles Mobile Extra Pequeno */
+    .controls-container {
+        margin-bottom: 1.2rem;
+    }
+
+    .tabs {
+        gap: 0.15rem;
+        padding: 0.3rem;
+        border-radius: 30px;
+    }
+
+    .tab-link {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+        border-radius: 25px;
+    }
+
+    .tab-link i {
+        font-size: 0.85rem;
+        margin-right: 0.3rem;
+    }
+
+    .tab-link:not(.active) span {
+        display: none;
+    }
+
+    .tab-link.active {
+        padding: 0.5rem 1.2rem;
+    }
+
+    /* Grid Extra Pequeno */
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+
+    /* Cards Extra Pequeno */
+    .dashboard-card {
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px var(--cor-sombra-card);
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px var(--cor-sombra-card);
+    }
+
+    .card-content h3 {
+        font-size: 1rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .card-content p {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .card-action {
+        margin-top: 1rem;
+    }
+
+    .card-action a {
+        display: block;
+        text-align: center;
+        padding: 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    /* Theme Switcher Extra Pequeno */
+    .theme-switcher {
+        width: 38px;
+        height: 38px;
+        top: 12px;
+        right: 12px;
+    }
+
+    .theme-switcher svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Footer Extra Pequeno */
+    .footer {
+        padding: 1.2rem 0.75rem;
+        margin-top: 2rem;
+        font-size: 0.8rem;
+    }
+
+    .loading-message {
+        font-size: 0.9rem;
+        padding: 1.5rem 0.75rem;
+    }
+
+    .tech-loading {
+        letter-spacing: 0;
+    }
+}
+
+/* ========================================
+   RESPONSIVE - ULTRA PEQUENO (até 380px)
+   ======================================== */
+@media (max-width: 380px) {
+    .header h1 {
+        font-size: 1.25rem;
+    }
+
+    .header p {
+        font-size: 0.75rem;
+    }
+
+    .counter {
+        font-size: 3rem;
+    }
+
+    .summary-container h2 {
+        font-size: 0.75rem;
+    }
+
+    .tab-link {
+        padding: 0.45rem 0.6rem;
+        font-size: 0.7rem;
+    }
+
+    .card-content h3 {
+        font-size: 0.9rem;
+    }
+
+    .card-content p {
+        font-size: 0.75rem;
+    }
+}
+
+/* ========================================
+   OTIMIZAÇÕES ADICIONAIS PARA TODOS MOBILE
+   ======================================== */
+@media (max-width: 768px) {
+    /* Melhorar touchability dos elementos */
+    .tab-link,
+    .card-action a {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Remover animations pesadas em mobile */
+    .futuristic-grid .dashboard-card {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    /* Reduzir sombras em mobile */
+    .dashboard-card,
+    .summary-container,
+    .tabs {
+        box-shadow: 0 2px 8px var(--cor-sombra-card) !important;
+    }
+
+    /* Melhorar scroll */
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Evitar zoom em input (se houver no futuro) */
+    input,
+    select,
+    textarea {
+        font-size: 16px;
+    }
+}
+
+/* ========================================
+   ORIENTAÇÃO LANDSCAPE (TABLETS)
+   ======================================== */
+@media (max-width: 1024px) and (orientation: landscape) {
+    .header {
+        padding: 1.5rem 1rem;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .container {
+        margin: 1rem auto;
+    }
+}
+
+/* ========================================
+   ORIENTAÇÃO LANDSCAPE (MOBILE)
+   ======================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+    .header {
+        padding: 1rem 1.5rem;
+    }
+
+    .header h1 {
+        font-size: 1.25rem;
+        margin: 0;
+    }
+
+    .header p {
+        font-size: 0.8rem;
+        margin: 0.2rem 0 0;
+    }
+
+    .summary-container {
+        padding: 0.8rem 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .counter {
+        font-size: 2.5rem;
+        margin: 0.2rem 0;
+    }
+
+    .container {
+        margin: 0.8rem auto;
+    }
+
+    .dashboard-card {
+        padding: 0.8rem;
+    }
+}
