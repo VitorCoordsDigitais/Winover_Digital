@@ -98,10 +98,22 @@ body {
     font-weight: 500;
     color: var(--cor-texto);
 }
-.counter {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: var(--azul-3-base);
+
+/* Novo estilo do contador */
+.counter-style {
+    font-size: 5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--azul-5-claro), #00f5ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    animation: counter-pulse 2s ease-in-out infinite;
+}
+
+@keyframes counter-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 /* ========================================
@@ -268,37 +280,15 @@ body {
     50% { text-shadow: 0 0 40px rgba(9, 116, 237, 0.8), 0 0 60px rgba(9, 116, 237, 0.5); }
 }
 
-/* Typing effect */
+/* Typing effect - REMOVIDO */
 .typing::after {
-    content: '|';
-    animation: blink 1s infinite;
+    content: '';
 }
-@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
 
 /* Contador digital */
 .digital {
     font-family: 'Courier New', monospace;
-    text-shadow: 0 0 10px var(--azul-5-claro);
-    animation: digital-glow 2s ease-in-out infinite alternate;
 }
-@keyframes digital-glow {
-    from { text-shadow: 0 0 10px var(--azul-5-claro); }
-    to { text-shadow: 0 0 20px var(--azul-5-claro), 0 0 30px var(--azul-5-claro); }
-}
-
-/* Badge tech */
-.tech-badge {
-    background: linear-gradient(45deg, var(--azul-5-claro), #00f5ff);
-    padding: 0.3rem 1rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    display: inline-block;
-    margin-top: 1rem;
-    animation: badge-float 3s ease-in-out infinite;
-    color: white;
-    font-weight: 600;
-}
-@keyframes badge-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
 /* Tabs futuristas */
 .futuristic-tabs .tab-link {
