@@ -97,33 +97,28 @@
                 setTheme(newTheme);
             });
         });
+function parseCSV(text) {
+    // 1. Remove aspas duplas que o CSV do Google às vezes adiciona
+    const cleanText = text.replace(/"/g, "");
+    
+    // 2. Divide em linhas, e filtra quaisquer linhas que sejam vazias
+    const rows = cleanText.split('\n').filter(row => row.trim() !== '');
 
-        function parseCSV(text) {
-    // Divide o texto em linhas, ignorando linhas em branco no final
-    const lines = text.trim().split('\n');
-    // Pega a primeira linha como cabeçalho (não usamos, mas é bom para referência)
-    const headers = lines.shift().split(',');
+    // 3. Remove a linha do cabeçalho
+    rows.shift();
 
-    // Mapeia cada linha para um objeto
-    return lines
-        .map(line => {
-            // Ignora linhas que possam estar em branco no meio do arquivo
-            if (!line.trim()) return null;
-
-            // Uma forma mais segura de lidar com vírgulas dentro dos campos (embora não seja o caso aqui)
-            const values = line.split(',');
-            
-            return {
-                Nome: values[0] ? values[0].trim() : '',
-                Descricao: values[1] ? values[1].trim() : '',
-                Link: values[2] ? values[2].trim() : '#',
-                Categoria: values[3] ? values[3].trim() : 'Outros'
-            };
-        })
-        // Filtra quaisquer linhas nulas ou itens que não tenham um nome
-        .filter(item => item && item.Nome);
+    // 4. Mapeia as linhas restantes para objetos
+    return rows.map(row => {
+        const values = row.split(',');
+        return {
+            Nome: values[0] ? values[0].trim() : '',
+            Descricao: values[1] ? values[1].trim() : '',
+            Link: values[2] ? values[2].trim() : '#',
+            Categoria: values[3] ? values[3].trim() : 'Outros'
+        };
+    }).filter(item => item.Nome); // Garante que só itens com nome sejam adicionados
 }
-}
+
 
         function createDashboardCard(item) {
             return `
@@ -197,6 +192,7 @@
 
 </body>
 </html>
+
 
 
 
