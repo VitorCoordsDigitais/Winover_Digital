@@ -8,8 +8,8 @@
 </head>
 <body>
 
+    <!-- ✅ HTML do tema CORRIGIDO - SVG fixo com ID -->
     <div class="theme-switcher">
-        <!-- O SVG inicial agora está completo -->
         <svg id="theme-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
@@ -52,34 +52,21 @@
     <script>
         const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQABegimqKLEvVVUJ7SyvJAYTbY4uoaDAYBnC-VCG8qO3YXfarwbxkSUr0P_c1VYBsHYce3ZKdOQoy5/pub?output=csv';
 
-        document.addEventListener('DOMContentLoaded', function( ) {
-            fetch(SPREADSHEET_URL)
-                .then(response => response.text())
-                .then(csvText => {
-                    const data = parseCSV(csvText);
-                    populateDashboards(data);
-                    openTab(null, 'Todos');
-                })
-                .catch(error => {
-                    console.error('Erro ao buscar dados da planilha:', error);
-                    document.querySelector('#Todos .loading-message').textContent = 'Erro ao carregar dashboards.';
-                });
-            
-            // Lógica do Modo Escuro (CORRIGIDA)
+        document.addEventListener('DOMContentLoaded', function() {
+            // ✅ JS do tema CORRIGIDO - troca só o path, não o container
             const themeSwitcher = document.querySelector('.theme-switcher');
-            const themeIconContainer = document.getElementById('theme-toggle-icon');
+            const themeIcon = document.getElementById('theme-toggle-icon');
             
-            // Templates completos dos SVGs
-            const sunIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path><circle cx="12" cy="12" r="5"></circle></svg>';
-            const moonIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+            const sunIconPath = '<path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path><circle cx="12" cy="12" r="5"></circle>';
+            const moonIconPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
 
             function setTheme(theme) {
                 if (theme === 'dark') {
                     document.body.classList.add('dark-mode');
-                    themeSwitcher.innerHTML = sunIconSVG;
+                    themeIcon.innerHTML = sunIconPath;
                 } else {
                     document.body.classList.remove('dark-mode');
-                    themeSwitcher.innerHTML = moonIconSVG;
+                    themeIcon.innerHTML = moonIconPath;
                 }
                 localStorage.setItem('theme', theme);
             }
@@ -91,6 +78,19 @@
                 const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
                 setTheme(newTheme);
             });
+
+            // Carregamento dos dados (igual ao seu)
+            fetch(SPREADSHEET_URL)
+                .then(response => response.text())
+                .then(csvText => {
+                    const data = parseCSV(csvText);
+                    populateDashboards(data);
+                    openTab(null, 'Todos');
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dados da planilha:', error);
+                    document.querySelector('#Todos .loading-message').textContent = 'Erro ao carregar dashboards.';
+                });
         });
 
         function parseCSV(text) {
