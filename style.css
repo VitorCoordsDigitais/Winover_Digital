@@ -1,191 +1,231 @@
-/* Definição das variáveis de cor para os temas claro e escuro com a nova paleta */
+/* --- Variáveis de Cores e Configurações Globais --- */
 :root {
-    /* Nova Paleta Monocromática */
-    --azul-1: #31547D;
-    --azul-2-escuro: #052D59;
-    --azul-3-principal: #184880;
-    --azul-4-vibrante: #0974ED;
-    --azul-5-medio: #28476B;
+    --azul-1-escuro: #052D59;
+    --azul-2-medio-escuro: #184880;
+    --azul-3-base: #31547D;
+    --azul-4-medio-claro: #28476B;
+    --azul-5-claro: #0974ED;
+    
+    --fundo-claro: #ECF0F1;
+    --texto-claro: #2C3E50;
+    --card-fundo-claro: #FFFFFF;
+    --sombra-card-claro: rgba(0, 0, 0, 0.1);
 
-    /* Tema Claro */
-    --bg-color: #f0f4f8; /* Um cinza-azulado muito claro */
-    --card-bg-color: #ffffff;
-    --text-color: #052D59; /* Texto principal usa o tom mais escuro */
-    --text-muted-color: #31547D;
-    --header-bg-color: var(--azul-2-escuro);
-    --header-text-color: #ffffff;
-    --footer-bg-color: var(--azul-2-escuro);
-    --footer-text-color: #f0f4f8;
-    --shadow-color: rgba(5, 45, 89, 0.1); /* Sombra baseada no azul escuro */
+    --fundo-escuro: #2C3E50;
+    --texto-escuro: #ECF0F1;
+    --card-fundo-escuro: #34495E;
+    --sombra-card-escuro: rgba(0, 0, 0, 0.3);
+
+    /* Transições */
+    --cor-fundo: var(--fundo-claro);
+    --cor-texto: var(--texto-claro);
+    --cor-fundo-card: var(--card-fundo-claro);
+    --cor-sombra-card: var(--sombra-card-claro);
+    --cor-fundo-header: var(--azul-2-medio-escuro);
+    --cor-fundo-footer: var(--azul-1-escuro);
 }
 
 body.dark-mode {
-    /* Tema Escuro */
-    --bg-color: #0a1929; /* Fundo bem escuro, quase preto-azulado */
-    --card-bg-color: #0e2a47;
-    --text-color: #e0e1dd;
-    --text-muted-color: #8892b0;
-    --header-bg-color: #052D59;
-    --header-text-color: #ffffff;
-    --footer-bg-color: #052D59;
-    --footer-text-color: #8892b0;
-    --shadow-color: rgba(0, 0, 0, 0.2);
+    --cor-fundo: var(--fundo-escuro);
+    --cor-texto: var(--texto-escuro);
+    --cor-fundo-card: var(--card-fundo-escuro);
+    --cor-sombra-card: var(--sombra-card-escuro);
+    --cor-fundo-header: var(--azul-1-escuro);
+    --cor-fundo-footer: #1e2b37;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* Botão de Modo Escuro */
+/* --- Cabeçalho --- */
+.header {
+    background-color: var(--cor-fundo-header);
+    color: white;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s;
+}
+.header-content {
+    position: relative;
+    z-index: 2;
+}
+.header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+.header p {
+    margin: 0.5rem 0 0;
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* --- Conteúdo Principal --- */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+/* --- Sumário e Contador --- */
+.summary-container {
+    background-color: var(--cor-fundo-card);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--cor-sombra-card);
+    text-align: center;
+    margin-bottom: 2rem;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.summary-container h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--cor-texto);
+}
+.counter {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--azul-3-base);
+}
+
+/* --- Controles e Abas --- */
+.controls-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+    background-color: var(--cor-fundo-card);
+    padding: 0.5rem;
+    border-radius: 50px;
+    box-shadow: 0 2px 10px var(--cor-sombra-card);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.tab-link {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background-color: transparent;
+    color: var(--cor-texto);
+    cursor: pointer;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+}
+.tab-link:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.tab-link.active {
+    background-color: var(--azul-3-base);
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Grid de Dashboards --- */
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+.dashboard-card {
+    background-color: var(--cor-fundo-card);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--cor-sombra-card);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    border: 1px solid transparent;
+}
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--cor-sombra-card);
+}
+.card-content h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    color: var(--cor-texto);
+}
+.card-content p {
+    margin: 0;
+    color: var(--cor-texto);
+    opacity: 0.8;
+    line-height: 1.5;
+}
+.card-action {
+    margin-top: 1.5rem;
+}
+.card-action a {
+    display: inline-block;
+    background-color: var(--azul-3-base);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.2s;
+}
+.card-action a:hover {
+    background-color: var(--azul-2-medio-escuro);
+    transform: scale(1.05);
+}
+.loading-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 3rem;
+}
+
+/* --- Modo Escuro --- */
 .theme-switcher {
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 40px;
-    height: 40px;
-    background-color: var(--card-bg-color);
-    color: var(--text-color);
+    z-index: 1000;
+    cursor: pointer;
+    background-color: var(--cor-fundo-card);
     border-radius: 50%;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 10px var(--shadow-color);
-    z-index: 1000;
-    transition: background-color 0.3s, color 0.3s;
-}
-.theme-switcher svg {
-    width: 20px;
-    height: 20px;
-}
-
-.header {
-    background-color: var(--header-bg-color);
-    color: var(--header-text-color);
-    padding: 2.5rem 1.5rem;
-    text-align: center;
-    border-bottom: 5px solid var(--azul-4-vibrante); /* Borda com o azul vibrante */
-    transition: background-color 0.3s, color 0.3s;
-}
-.header h1 { margin: 0; font-size: 2.8rem; font-weight: 700; letter-spacing: 1px; }
-.header p { margin: 0.5rem 0 0; font-size: 1.2rem; opacity: 0.9; }
-
-.container { max-width: 1300px; margin: 2.5rem auto; padding: 0 1.5rem; }
-
-.summary-container {
-    background-color: var(--card-bg-color);
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-align: center;
-    margin-bottom: 2.5rem;
-    box-shadow: 0 4px 15px var(--shadow-color);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     transition: background-color 0.3s;
 }
-.summary-container h2 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.2rem;
-    color: var(--text-color);
-    font-weight: 600;
-    transition: color 0.3s;
-}
-.summary-container .counter {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: var(--azul-3-principal); /* Cor do contador */
-    line-height: 1.1;
-    transition: color 0.3s;
-}
-body.dark-mode .summary-container .counter {
-    color: var(--azul-4-vibrante);
+.theme-switcher svg {
+    width: 24px;
+    height: 24px;
+    color: var(--cor-texto);
 }
 
-.controls-container { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem; }
-.tabs { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
-.tab-link {
-    padding: 0.7rem 1.5rem;
-    border: 1px solid var(--azul-1); /* Borda sutil */
-    background-color: var(--card-bg-color);
-    color: var(--text-color);
-    cursor: pointer;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px var(--shadow-color);
-}
-.tab-link:hover { background-color: var(--bg-color); }
-.tab-link.active {
-    background-color: var(--azul-4-vibrante);
-    color: #ffffff;
-    border-color: var(--azul-4-vibrante);
-}
-
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-.dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
-.loading-message { font-style: italic; }
-
-.dashboard-card {
-    background-color: var(--card-bg-color);
-    border-radius: 12px;
-    box-shadow: 0 4px 10px var(--shadow-color);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
-    display: flex;
-    flex-direction: column;
-    border-left: 5px solid var(--azul-3-principal);
-}
-.dashboard-card:hover { transform: translateY(-6px); box-shadow: 0 8px 20px var(--shadow-color); }
-.card-content { padding: 1.5rem; flex-grow: 1; }
-.card-content h3 {
-    margin-top: 0;
-    margin-bottom: 0.75rem;
-    font-size: 1.3rem;
-    color: var(--azul-2-escuro);
-    transition: color 0.3s;
-}
-body.dark-mode .card-content h3 {
-    color: var(--text-color);
-}
-.card-content p {
-    margin: 0;
-    color: var(--text-muted-color);
-    font-size: 0.95rem;
-    line-height: 1.5;
-    transition: color 0.3s;
-}
-.card-action {
-    padding: 1rem 1.5rem;
-    background-color: transparent;
-    border-top: 1px solid var(--bg-color);
-    text-align: right;
-    transition: border-color 0.3s;
-}
-.card-action a {
-    text-decoration: none;
-    color: #ffffff;
-    background-color: var(--azul-4-vibrante);
-    padding: 0.6rem 1.2rem;
-    border-radius: 5px;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    display: inline-block;
-}
-.card-action a:hover {
-    background-color: var(--azul-5-medio);
-    transform: scale(1.05);
-}
-
+/* --- Rodapé --- */
 .footer {
     text-align: center;
     padding: 2rem 1.5rem;
-    margin-top: 2rem;
-    background-color: var(--footer-bg-color);
-    color: var(--footer-text-color);
-    transition: background-color 0.3s, color 0.3s;
+    margin-top: 3rem;
+    background-color: var(--cor-fundo-footer);
+    color: #ECF0F1;
+    transition: background-color 0.3s;
 }
-.footer p { margin: 0; }
+.footer p {
+    margin: 0;
+    opacity: 0.8;
+}
