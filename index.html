@@ -1,342 +1,233 @@
-/* ========================================
-   VARIÁVEIS DE CORES E CONFIGURAÇÕES GLOBAIS
-   ======================================== */
-:root {
-    --azul-1-escuro: #052D59;
-    --azul-2-medio-escuro: #184880;
-    --azul-3-base: #31547D;
-    --azul-4-medio-claro: #28476B;
-    --azul-5-claro: #0974ED;
-    
-    --fundo-claro: #ECF0F1;
-    --texto-claro: #2C3E50;
-    --card-fundo-claro: #FFFFFF;
-    --sombra-card-claro: rgba(0, 0, 0, 0.1);
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Dashboards - Winover Digital</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    --fundo-escuro: #2C3E50;
-    --texto-escuro: #ECF0F1;
-    --card-fundo-escuro: #34495E;
-    --sombra-card-escuro: rgba(0, 0, 0, 0.3);
+    <!-- Partículas de fundo (IA/tech) -->
+    <canvas id="particles-canvas"></canvas>
 
-    /* Transições */
-    --cor-fundo: var(--fundo-claro);
-    --cor-texto: var(--texto-claro);
-    --cor-fundo-card: var(--card-fundo-claro);
-    --cor-sombra-card: var(--sombra-card-claro);
-    --cor-fundo-header: var(--azul-2-medio-escuro);
-    --cor-fundo-footer: var(--azul-1-escuro);
-}
+    <div class="theme-switcher">
+        <svg id="theme-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </div>
 
-body.dark-mode {
-    --cor-fundo: var(--fundo-escuro);
-    --cor-texto: var(--texto-escuro);
-    --cor-fundo-card: var(--card-fundo-escuro);
-    --cor-sombra-card: var(--sombra-card-escuro);
-    --cor-fundo-header: var(--azul-1-escuro);
-    --cor-fundo-footer: #1e2b37;
-}
+    <header class="header">
+        <h1>Winover Digital</h1>
+        <p class="subtitle-pulse">Portal de Business Intelligence</p>
+    </header>
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    margin: 0;
-    background-color: var(--cor-fundo);
-    color: var(--cor-texto);
-    transition: background-color 0.3s, color 0.3s;
-}
+    <main class="container">
+        <div class="summary-container">
+            <h2 class="typing">Total de Dashboards</h2>
+            <div id="bi-counter" class="counter digital counter-style">0</div>
+        </div>
 
-/* ========================================
-   CABEÇALHO
-   ======================================== */
-.header {
-    background-color: var(--cor-fundo-header);
-    color: white;
-    padding: 3rem 1.5rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    transition: background-color 0.3s;
-}
-.header-content {
-    position: relative;
-    z-index: 2;
-}
-.header h1 {
-    margin: 0;
-    font-size: 2.5rem;
-    font-weight: 600;
-}
-.header p {
-    margin: 0.5rem 0 0;
-    font-size: 1.2rem;
-    opacity: 0.9;
-}
+        <div class="controls-container">
+            <div class="tabs futuristic-tabs">
+                <button class="tab-link active" onclick="openTab(event, 'Todos')">
+                    <span>Todos</span>
+                </button>
+                <button class="tab-link" onclick="openTab(event, 'WhatsApp')">
+                    <span>WhatsApp</span>
+                </button>
+                <button class="tab-link" onclick="openTab(event, 'Portal')">
+                    <span>Portal</span>
+                </button>
+                <button class="tab-link" onclick="openTab(event, 'AgenteVirtual')">
+                    <span>Agente Virtual</span>
+                </button>
+            </div>
+        </div>
 
-/* ========================================
-   CONTEÚDO PRINCIPAL
-   ======================================== */
-.container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-}
+        <div id="Todos" class="tab-content active">
+            <div class="dashboard-grid futuristic-grid">
+                <p class="loading-message tech-loading">🔄 Inicializando matriz neural... <span class="dots">⠄⠆⠇⠋⠙⠸</span></p>
+            </div>
+        </div>
+        <div id="WhatsApp" class="tab-content" data-category="WhatsApp"><div class="dashboard-grid futuristic-grid"></div></div>
+        <div id="Portal" class="tab-content" data-category="Portal"><div class="dashboard-grid futuristic-grid"></div></div>
+        <div id="AgenteVirtual" class="tab-content" data-category="AgenteVirtual"><div class="dashboard-grid futuristic-grid"></div></div>
+    </main>
 
-/* ========================================
-   SUMÁRIO E CONTADOR
-   ======================================== */
-.summary-container {
-    background-color: var(--cor-fundo-card);
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px var(--cor-sombra-card);
-    text-align: center;
-    margin-bottom: 2rem;
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
-.summary-container h2 {
-    margin: 0 0 0.5rem;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: var(--cor-texto);
-}
+    <footer class="footer">
+        <p>&copy; 2026 Winover Digital</p>
+    </footer>
 
-/* Novo estilo do contador */
-.counter-style {
-    font-size: 5rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--azul-5-claro), #00f5ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: none;
-    animation: counter-pulse 2s ease-in-out infinite;
-}
+    <script>
+        // Partículas IA
+        function initParticles() {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
 
-@keyframes counter-pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
+            const particles = [];
+            for (let i = 0; i < 100; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    radius: Math.random() * 2 + 1,
+                    glow: Math.random() * 0.5 + 0.5
+                });
+            }
 
-/* ========================================
-   CONTROLES E ABAS
-   ======================================== */
-.controls-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-}
-.tabs {
-    display: flex;
-    gap: 0.5rem;
-    background-color: var(--cor-fundo-card);
-    padding: 0.5rem;
-    border-radius: 50px;
-    box-shadow: 0 2px 10px var(--cor-sombra-card);
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
-.tab-link {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    background-color: transparent;
-    color: var(--cor-texto);
-    cursor: pointer;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: background-color 0.3s, color 0.3s;
-}
-.tab-link:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-.tab-link.active {
-    background-color: var(--azul-3-base);
-    color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(9, 116, 237, ${p.glow})`;
+                    ctx.fill();
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
 
-/* ========================================
-   GRID DE DASHBOARDS
-   ======================================== */
-.tab-content {
-    display: none;
-}
-.tab-content.active {
-    display: block;
-}
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
-.dashboard-card {
-    background-color: var(--cor-fundo-card);
-    border-radius: 12px;
-    box-shadow: 0 4px 15px var(--cor-sombra-card);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 1.5rem;
-    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
-    border: 1px solid transparent;
-}
-.dashboard-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px var(--cor-sombra-card);
-}
-.card-content h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.25rem;
-    color: var(--cor-texto);
-}
-.card-content p {
-    margin: 0;
-    color: var(--cor-texto);
-    opacity: 0.8;
-    line-height: 1.5;
-}
-.card-action {
-    margin-top: 1.5rem;
-}
-.card-action a {
-    display: inline-block;
-    background-color: var(--azul-3-base);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.2s, transform 0.2s;
-}
-.card-action a:hover {
-    background-color: var(--azul-2-medio-escuro);
-    transform: scale(1.05);
-}
-.loading-message {
-    grid-column: 1 / -1;
-    text-align: center;
-    font-size: 1.2rem;
-    padding: 3rem;
-}
+        const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQABegimqKLEvVVUJ7SyvJAYTbY4uoaDAYBnC-VCG8qO3YXfarwbxkSUr0P_c1VYBsHYce3ZKdOQoy5/pub?output=csv';
 
-/* ========================================
-   MODO ESCURO
-   ======================================== */
-.theme-switcher {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    cursor: pointer;
-    background-color: var(--cor-fundo-card);
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    transition: background-color 0.3s;
-}
-.theme-switcher svg {
-    width: 24px;
-    height: 24px;
-    color: var(--cor-texto);
-}
+        document.addEventListener('DOMContentLoaded', function() {
+            initParticles();
 
-/* ========================================
-   RODAPÉ
-   ======================================== */
-.footer {
-    text-align: center;
-    padding: 2rem 1.5rem;
-    margin-top: 3rem;
-    background-color: var(--cor-fundo-footer);
-    color: #ECF0F1;
-    transition: background-color 0.3s;
-}
-.footer p {
-    margin: 0;
-    opacity: 0.8;
-}
+            // Tema
+            const themeSwitcher = document.querySelector('.theme-switcher');
+            const themeIcon = document.getElementById('theme-toggle-icon');
+            const sunIconPath = '<path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path><circle cx="12" cy="12" r="5"></circle>';
+            const moonIconPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
 
-/* ========================================
-   EFEITOS FUTURISTAS IA
-   ======================================== */
+            function setTheme(theme) {
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    themeIcon.innerHTML = sunIconPath;
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    themeIcon.innerHTML = moonIconPath;
+                }
+                localStorage.setItem('theme', theme);
+            }
 
-/* Canvas partículas */
-#particles-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    pointer-events: none;
-}
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            setTheme(currentTheme);
 
-/* Subtitle pulse */
-.subtitle-pulse {
-    animation: pulse-glow 3s ease-in-out infinite;
-}
-@keyframes pulse-glow {
-    0%, 100% { text-shadow: 0 0 20px rgba(9, 116, 237, 0.5); }
-    50% { text-shadow: 0 0 40px rgba(9, 116, 237, 0.8), 0 0 60px rgba(9, 116, 237, 0.5); }
-}
+            themeSwitcher.addEventListener('click', function() {
+                const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+                setTheme(newTheme);
+            });
 
-/* Typing effect - REMOVIDO */
-.typing::after {
-    content: '';
-}
+            // Carregamento CSV
+            fetch(SPREADSHEET_URL)
+                .then(response => response.text())
+                .then(csvText => {
+                    const data = parseCSV(csvText);
+                    populateDashboards(data);
+                    openTab(null, 'Todos');
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    document.querySelector('#Todos .loading-message').textContent = '⚠️ Erro ao carregar dashboards.';
+                });
+        });
 
-/* Contador digital */
-.digital {
-    font-family: 'Courier New', monospace;
-}
+        function parseCSV(text) {
+            const lines = text.trim().split('\n');
+            if (lines.length < 2) return [];
+            
+            const data = [];
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',').map(v => v.trim());
+                if (values[0]) {
+                    data.push({
+                        Nome: values[0] || '',
+                        Descricao: values[1] || '',
+                        Link: values[2] || '#',
+                        Categoria: values[3] || 'Outros'
+                    });
+                }
+            }
+            return data;
+        }
 
-/* Tabs futuristas */
-.futuristic-tabs .tab-link {
-    position: relative;
-    overflow: hidden;
-}
-.futuristic-tabs .tab-link::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: left 0.5s;
-}
-.futuristic-tabs .tab-link:hover::before { left: 100%; }
+        function createDashboardCard(item) {
+            return `
+                <div class="dashboard-card">
+                    <div class="card-content">
+                        <h3>${item.Nome}</h3>
+                        <p>${item.Descricao}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="${item.Link}" target="_blank">Acessar BI</a>
+                    </div>
+                </div>
+            `;
+        }
 
-/* Grid com stagger */
-.futuristic-grid .dashboard-card {
-    animation: card-reveal 0.6s ease-out forwards;
-    opacity: 0;
-    transform: translateY(50px) scale(0.9);
-}
-.futuristic-grid .dashboard-card:nth-child(1) { animation-delay: 0.1s; }
-.futuristic-grid .dashboard-card:nth-child(2) { animation-delay: 0.2s; }
-.futuristic-grid .dashboard-card:nth-child(3) { animation-delay: 0.3s; }
-.futuristic-grid .dashboard-card:nth-child(4) { animation-delay: 0.4s; }
-.futuristic-grid .dashboard-card:nth-child(5) { animation-delay: 0.5s; }
-.futuristic-grid .dashboard-card:nth-child(6) { animation-delay: 0.6s; }
-@keyframes card-reveal {
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
+        function populateDashboards(data) {
+            const todosGrid = document.querySelector('#Todos .dashboard-grid');
+            todosGrid.innerHTML = '';
 
-/* Hover glow */
-.dashboard-card:hover {
-    box-shadow: 0 0 50px var(--azul-5-claro) !important;
-}
+            data.forEach(item => {
+                const cardHTML = createDashboardCard(item);
+                todosGrid.innerHTML += cardHTML;
+                
+                const categoryId = item.Categoria.replace(/\s+/g, '');
+                const categoryGrid = document.querySelector(`#${categoryId} .dashboard-grid`);
+                if (categoryGrid) {
+                    categoryGrid.innerHTML += cardHTML;
+                }
+            });
+            animateCounter(data.length);
+        }
 
-/* Loading tech */
-.tech-loading .dots {
-    animation: dots 1.5s infinite;
-}
-@keyframes dots {
-    0% { content: '⠄⠆⠇⠋⠙⠸'; }
-    16% { content: '⠆⠇⠋⠙⠸⠄'; }
-    33% { content: '⠇⠋⠙⠸⠄⠆'; }
-    50% { content: '⠋⠙⠸⠄⠆⠇'; }
-    66% { content: '⠙⠸⠄⠆⠇⠋'; }
-    83% { content: '⠸⠄⠆⠇⠋⠙'; }
-}
+        function animateCounter(target) {
+            const counterElement = document.getElementById('bi-counter');
+            let current = 0;
+            const duration = 1000;
+            let start = null;
+            
+            function step(timestamp) {
+                if (!start) start = timestamp;
+                const progress = Math.min((timestamp - start) / duration, 1);
+                counterElement.innerText = Math.floor(progress * target);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    counterElement.innerText = target;
+                }
+            }
+            window.requestAnimationFrame(step);
+        }
+
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            
+            const tablinks = document.getElementsByClassName("tab-link");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            
+            document.getElementById(tabName).style.display = "block";
+            if (evt) {
+                evt.currentTarget.className += " active";
+            } else {
+                document.querySelector('.tab-link').className += " active";
+            }
+        }
+    </script>
+
+</body>
+</html>
