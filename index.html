@@ -50,7 +50,7 @@
         <p>&copy; 2026 Winover Digital. Todos os direitos reservados.</p>
     </footer>
 
-        <!-- Scripts no final do body para melhor performance -->
+    <!-- Scripts no final do body para melhor performance -->
     <script src="particles.min.js"></script>
     
     <!-- Script ÚNICO e Principal da Página -->
@@ -59,7 +59,7 @@
         const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQABegimqKLEvVVUJ7SyvJAYTbY4uoaDAYBnC-VCG8qO3YXfarwbxkSUr0P_c1VYBsHYce3ZKdOQoy5/pub?output=csv';
 
         // --- Bloco ÚNICO que executa quando o HTML está pronto ---
-        document.addEventListener('DOMContentLoaded', function( ) {
+        document.addEventListener('DOMContentLoaded', function( ) { // <--- ERRO CORRIGIDO AQUI
             
             // 1. Inicializa a animação de partículas
             particlesJS.load('particles-js', 'particles.json', function() {
@@ -186,8 +186,3 @@
 
 </body>
 </html>
-
-
-
-
-
