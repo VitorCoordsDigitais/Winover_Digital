@@ -64,8 +64,8 @@ body {
     left: -100%;
     width: 200%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    animation: shine 3s infinite;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    animation: shine 4s infinite;
 }
 
 @keyframes shine {
@@ -78,23 +78,22 @@ body {
     position: relative;
     z-index: 2;
     animation: title-bounce 3s ease-in-out infinite;
-    text-shadow: 0 0 20px rgba(9, 116, 237, 0.5);
+    text-shadow: 0 0 20px rgba(9, 116, 237, 0.6);
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 600;
 }
 
 @keyframes title-bounce {
-    0%, 100% { transform: translateY(0) }
-    50% { transform: translateY(-10px) }
+    0%, 100% { transform: translateY(0); letter-spacing: 0px; }
+    50% { transform: translateY(-8px); letter-spacing: 2px; }
 }
 
 .header-content {
     position: relative;
     z-index: 2;
 }
-.header h1 {
-    margin: 0;
-    font-size: 2.5rem;
-    font-weight: 600;
-}
+
 .header p {
     margin: 0.5rem 0 0;
     font-size: 1.2rem;
@@ -122,6 +121,7 @@ body {
     margin-bottom: 2rem;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
+
 .summary-container h2 {
     margin: 0 0 0.5rem;
     font-size: 1.2rem;
@@ -129,23 +129,30 @@ body {
     color: var(--cor-texto);
 }
 
-/* Novo estilo do contador - Fonte Orbitron Profissional */
-.counter-orbitron {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 6rem;
+/* Novo estilo do contador - PROFISSIONAL */
+.counter-pro {
+    font-family: 'Courier New', 'Courier', monospace;
+    font-size: 5.5rem;
     font-weight: 900;
-    background: linear-gradient(135deg, var(--azul-5-claro), #00f5ff);
+    background: linear-gradient(135deg, var(--azul-5-claro) 0%, #00d9ff 50%, var(--azul-5-claro) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: none;
-    animation: counter-pulse 2s ease-in-out infinite;
-    letter-spacing: 2px;
+    letter-spacing: 4px;
+    animation: number-glow 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px rgba(9, 116, 237, 0.4));
+    font-variant: tabular-nums;
 }
 
-@keyframes counter-pulse {
-    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(9, 116, 237, 0.5)); }
-    50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(9, 116, 237, 0.8)); }
+@keyframes number-glow {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 15px rgba(9, 116, 237, 0.5));
+    }
+    50% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 25px rgba(9, 116, 237, 0.8));
+    }
 }
 
 /* ========================================
@@ -156,6 +163,7 @@ body {
     justify-content: center;
     margin-bottom: 2rem;
 }
+
 .tabs {
     display: flex;
     gap: 0.5rem;
@@ -165,6 +173,7 @@ body {
     box-shadow: 0 2px 10px var(--cor-sombra-card);
     transition: background-color 0.3s, box-shadow 0.3s;
 }
+
 .tab-link {
     padding: 0.75rem 1.5rem;
     border: none;
@@ -176,9 +185,11 @@ body {
     font-weight: 500;
     transition: background-color 0.3s, color 0.3s;
 }
+
 .tab-link:hover {
     background-color: rgba(0, 0, 0, 0.05);
 }
+
 .tab-link.active {
     background-color: var(--azul-3-base);
     color: white;
@@ -191,14 +202,17 @@ body {
 .tab-content {
     display: none;
 }
+
 .tab-content.active {
     display: block;
 }
+
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
 }
+
 .dashboard-card {
     background-color: var(--cor-fundo-card);
     border-radius: 12px;
@@ -210,24 +224,29 @@ body {
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
     border: 1px solid transparent;
 }
+
 .dashboard-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px var(--cor-sombra-card);
 }
+
 .card-content h3 {
     margin: 0 0 0.5rem;
     font-size: 1.25rem;
     color: var(--cor-texto);
 }
+
 .card-content p {
     margin: 0;
     color: var(--cor-texto);
     opacity: 0.8;
     line-height: 1.5;
 }
+
 .card-action {
     margin-top: 1.5rem;
 }
+
 .card-action a {
     display: inline-block;
     background-color: var(--azul-3-base);
@@ -238,10 +257,12 @@ body {
     font-weight: 500;
     transition: background-color 0.2s, transform 0.2s;
 }
+
 .card-action a:hover {
     background-color: var(--azul-2-medio-escuro);
     transform: scale(1.05);
 }
+
 .loading-message {
     grid-column: 1 / -1;
     text-align: center;
@@ -268,6 +289,7 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     transition: background-color 0.3s;
 }
+
 .theme-switcher svg {
     width: 24px;
     height: 24px;
@@ -285,6 +307,7 @@ body {
     color: #ECF0F1;
     transition: background-color 0.3s;
 }
+
 .footer p {
     margin: 0;
     opacity: 0.8;
@@ -307,6 +330,7 @@ body {
 .subtitle-pulse {
     animation: pulse-glow 3s ease-in-out infinite;
 }
+
 @keyframes pulse-glow {
     0%, 100% { text-shadow: 0 0 20px rgba(9, 116, 237, 0.5); }
     50% { text-shadow: 0 0 40px rgba(9, 116, 237, 0.8), 0 0 60px rgba(9, 116, 237, 0.5); }
@@ -322,6 +346,7 @@ body {
     position: relative;
     overflow: hidden;
 }
+
 .futuristic-tabs .tab-link::before {
     content: '';
     position: absolute;
@@ -332,7 +357,10 @@ body {
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
     transition: left 0.5s;
 }
-.futuristic-tabs .tab-link:hover::before { left: 100%; }
+
+.futuristic-tabs .tab-link:hover::before {
+    left: 100%;
+}
 
 /* Grid com stagger */
 .futuristic-grid .dashboard-card {
@@ -340,12 +368,14 @@ body {
     opacity: 0;
     transform: translateY(50px) scale(0.9);
 }
+
 .futuristic-grid .dashboard-card:nth-child(1) { animation-delay: 0.1s; }
 .futuristic-grid .dashboard-card:nth-child(2) { animation-delay: 0.2s; }
 .futuristic-grid .dashboard-card:nth-child(3) { animation-delay: 0.3s; }
 .futuristic-grid .dashboard-card:nth-child(4) { animation-delay: 0.4s; }
 .futuristic-grid .dashboard-card:nth-child(5) { animation-delay: 0.5s; }
 .futuristic-grid .dashboard-card:nth-child(6) { animation-delay: 0.6s; }
+
 @keyframes card-reveal {
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
@@ -359,6 +389,7 @@ body {
 .tech-loading .dots {
     animation: dots 1.5s infinite;
 }
+
 @keyframes dots {
     0% { content: '⠄⠆⠇⠋⠙⠸'; }
     16% { content: '⠆⠇⠋⠙⠸⠄'; }
