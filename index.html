@@ -50,27 +50,23 @@
         <p>&copy; 2026 Winover Digital. Todos os direitos reservados.</p>
     </footer>
 
-    <!-- Scripts no final do body para melhor performance -->
         <!-- Scripts no final do body para melhor performance -->
     <script src="particles.min.js"></script>
     
-    <!-- Script da Animação (Separado) -->
+    <!-- Script ÚNICO e Principal da Página -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Apenas inicializa a animação.
-            // A função particlesJS já existe porque o script acima foi carregado.
+        // URL da sua planilha
+        const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQABegimqKLEvVVUJ7SyvJAYTbY4uoaDAYBnC-VCG8qO3YXfarwbxkSUr0P_c1VYBsHYce3ZKdOQoy5/pub?output=csv';
+
+        // --- Bloco ÚNICO que executa quando o HTML está pronto ---
+        document.addEventListener('DOMContentLoaded', function( ) {
+            
+            // 1. Inicializa a animação de partículas
             particlesJS.load('particles-js', 'particles.json', function() {
                 console.log('Animação de partículas carregada com sucesso.');
             });
-        });
-    </script>
 
-    <!-- Script Principal da Página (Separado) -->
-    <script>
-        const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQABegimqKLEvVVUJ7SyvJAYTbY4uoaDAYBnC-VCG8qO3YXfarwbxkSUr0P_c1VYBsHYce3ZKdOQoy5/pub?output=csv';
-
-        document.addEventListener('DOMContentLoaded', function( ) {
-            // Este script agora cuida apenas da lógica da página, sem depender da animação.
+            // 2. Busca os dados da planilha
             fetch(SPREADSHEET_URL)
                 .then(response => response.text())
                 .then(csvText => {
@@ -83,7 +79,7 @@
                     document.querySelector('#Todos .loading-message').textContent = 'Erro ao carregar dashboards.';
                 });
             
-            // Lógica do Modo Escuro
+            // 3. Configura a lógica do Modo Escuro
             const themeSwitcher = document.querySelector('.theme-switcher');
             const sunIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path><circle cx="12" cy="12" r="5"></circle></svg>';
             const moonIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
@@ -107,6 +103,8 @@
                 setTheme(newTheme);
             });
         });
+
+        // --- Funções Auxiliares (fora do DOMContentLoaded) ---
 
         function parseCSV(text) {
             const rows = text.split(/\r\n|\n/).slice(1);
@@ -188,4 +186,8 @@
 
 </body>
 </html>
+
+
+
+
 
