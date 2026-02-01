@@ -96,35 +96,120 @@ body {
 }
 
 /* ========================================
-   SUMÁRIO E CONTADOR
+   SUMÁRIO E CONTADOR - PREMIUM
    ======================================== */
 .summary-container {
-    background-color: var(--cor-fundo-card);
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px var(--cor-sombra-card);
+    background: linear-gradient(135deg, var(--azul-3-base) 0%, var(--azul-2-medio-escuro) 100%);
+    padding: 2.5rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(9, 116, 237, 0.25);
     text-align: center;
     margin-bottom: 2rem;
-    transition: background-color 0.3s, box-shadow 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-family: 'Montserrat', sans-serif;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.summary-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 245, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: grid-move 20s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes grid-move {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+.summary-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    animation: shine 3s infinite;
+    pointer-events: none;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.summary-container:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 80px rgba(9, 116, 237, 0.4);
+    border-color: rgba(0, 245, 255, 0.3);
 }
 
 .summary-container h2 {
-    margin: 0 0 0.5rem;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--cor-texto);
+    margin: 0 0 1rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
     font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #FFFFFF 0%, #00F5FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
-/* Contador com Montserrat - SEM ANIMAÇÃO */
+/* Contador com Montserrat - PREMIUM */
 .counter {
     font-family: 'Montserrat', sans-serif !important;
-    font-size: 5rem;
+    font-size: 7rem;
     font-weight: 900;
-    color: var(--azul-3-base);
-    letter-spacing: 2px;
-    margin: 1rem 0;
+    background: linear-gradient(135deg, #00F5FF 0%, #0974ED 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -2px;
+    margin: 1.5rem 0;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 20px 40px rgba(9, 116, 237, 0.3);
+    animation: counter-glow 3s ease-in-out infinite;
+}
+
+@keyframes counter-glow {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.5));
+        transform: scale(1);
+    }
+    50% {
+        filter: drop-shadow(0 0 25px rgba(0, 245, 255, 0.8));
+        transform: scale(1.05);
+    }
+}
+
+/* Efeito de brilho no fundo */
+.summary-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 245, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: grid-move 20s linear infinite;
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* ========================================
