@@ -108,6 +108,7 @@ body {
     transition: all 0.3s ease;
     font-family: 'Montserrat', sans-serif;
     border: 1px solid rgba(9, 116, 237, 0.15);
+    position: relative;
 }
 
 .summary-container:hover {
@@ -126,7 +127,7 @@ body {
     opacity: 0.85;
 }
 
-/* Contador com Montserrat - ELEGANTE */
+/* Contador com Montserrat - ELEGANTE (SEM SCALE NO HOVER) */
 .counter {
     font-family: 'Montserrat', sans-serif !important;
     font-size: 5.5rem;
@@ -136,13 +137,12 @@ body {
     margin: 0.5rem 0;
     position: relative;
     z-index: 1;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease;
     line-height: 1;
 }
 
 .summary-container:hover .counter {
     color: var(--azul-2-medio-escuro);
-    transform: scale(1.05);
 }
 
 /* Efeito de underline sutil */
@@ -163,32 +163,6 @@ body {
 .summary-container:hover::after {
     opacity: 1;
     width: 100px;
-}
-
-@keyframes counter-glow {
-    0%, 100% {
-        filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.5));
-        transform: scale(1);
-    }
-    50% {
-        filter: drop-shadow(0 0 25px rgba(0, 245, 255, 0.8));
-        transform: scale(1.05);
-    }
-}
-
-/* Efeito de brilho no fundo */
-.summary-container::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(0, 245, 255, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-    animation: grid-move 20s linear infinite;
-    pointer-events: none;
-    z-index: 1;
 }
 
 /* ========================================
