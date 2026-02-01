@@ -99,17 +99,31 @@
         });
 
         function parseCSV(text) {
-            const rows = text.split(/\r\n|\n/).slice(1);
-            return rows.map(row => {
-                const values = row.split(',');
-                return {
-                    Nome: values[0] ? values[0].trim() : '',
-                    Descricao: values[1] ? values[1].trim() : '',
-                    Link: values[2] ? values[2].trim() : '#',
-                    Categoria: values[3] ? values[3].trim() : 'Outros'
-                };
-            }).filter(item => item.Nome);
-        }
+    // Divide o texto em linhas, ignorando linhas em branco no final
+    const lines = text.trim().split('\n');
+    // Pega a primeira linha como cabeçalho (não usamos, mas é bom para referência)
+    const headers = lines.shift().split(',');
+
+    // Mapeia cada linha para um objeto
+    return lines
+        .map(line => {
+            // Ignora linhas que possam estar em branco no meio do arquivo
+            if (!line.trim()) return null;
+
+            // Uma forma mais segura de lidar com vírgulas dentro dos campos (embora não seja o caso aqui)
+            const values = line.split(',');
+            
+            return {
+                Nome: values[0] ? values[0].trim() : '',
+                Descricao: values[1] ? values[1].trim() : '',
+                Link: values[2] ? values[2].trim() : '#',
+                Categoria: values[3] ? values[3].trim() : 'Outros'
+            };
+        })
+        // Filtra quaisquer linhas nulas ou itens que não tenham um nome
+        .filter(item => item && item.Nome);
+}
+}
 
         function createDashboardCard(item) {
             return `
@@ -183,5 +197,6 @@
 
 </body>
 </html>
+
 
 
