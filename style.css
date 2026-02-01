@@ -229,3 +229,43 @@ body {
     margin: 0;
     opacity: 0.8;
 }
+
+
+/* ========================================
+   🎨 EFEITOS FUTURISTAS IA - ADICIONE AQUI
+   ======================================== */
+
+/* Canvas partículas */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Glitch header */
+.glitch {
+    position: relative;
+}
+.glitch h1::before, .glitch h1::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.glitch h1::before {
+    animation: glitch-1 2s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+.glitch h1::after {
+    animation: glitch-2 2.5s infinite linear alternate-reverse;
+    clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+@keyframes glitch-1 { 0%, 95%{transform:translate(0);}97%,99%{transform:translate(-2px,2px);}100%{transform:translate(2px,-2px);} }
+@keyframes glitch-2 { 0%,95%{transform:translate(0);}97%,99%{transform:translate(2px,-2px);}100%{transform:translate(-2px,2px);} }
+
+/* Resto dos efeitos... (cole tudo que enviei acima) */
+
