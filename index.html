@@ -51,16 +51,26 @@
     </footer>
 
     <!-- Scripts no final do body para melhor performance -->
+        <!-- Scripts no final do body para melhor performance -->
     <script src="particles.min.js"></script>
+    
+    <!-- Script da Animação (Separado) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apenas inicializa a animação.
+            // A função particlesJS já existe porque o script acima foi carregado.
+            particlesJS.load('particles-js', 'particles.json', function() {
+                console.log('Animação de partículas carregada com sucesso.');
+            });
+        });
+    </script>
+
+    <!-- Script Principal da Página (Separado) -->
     <script>
         const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQABegimqKLEvVVUJ7SyvJAYTbY4uoaDAYBnC-VCG8qO3YXfarwbxkSUr0P_c1VYBsHYce3ZKdOQoy5/pub?output=csv';
 
         document.addEventListener('DOMContentLoaded', function( ) {
-            // Inicializa a animação de partículas
-            particlesJS.load('particles-js', 'particles.json', function() {
-                console.log('Animação de partículas carregada.');
-            });
-
+            // Este script agora cuida apenas da lógica da página, sem depender da animação.
             fetch(SPREADSHEET_URL)
                 .then(response => response.text())
                 .then(csvText => {
@@ -134,7 +144,7 @@
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = cardHTML;
                 const cardElement = tempDiv.firstChild;
-                cardElement.style.animationDelay = `${index * 0.05}s`; // Adiciona delay para animação em cascata
+                cardElement.style.animationDelay = `${index * 0.05}s`;
 
                 todosGrid.appendChild(cardElement.cloneNode(true));
                 
@@ -175,5 +185,7 @@
             }
         }
     </script>
+
 </body>
 </html>
+
