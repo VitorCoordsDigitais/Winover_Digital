@@ -1,27 +1,23 @@
-/* Definição das variáveis de cor para os temas claro e escuro com a nova paleta */
 :root {
-    /* Nova Paleta Monocromática */
     --azul-1: #31547D;
     --azul-2-escuro: #052D59;
     --azul-3-principal: #184880;
     --azul-4-vibrante: #0974ED;
     --azul-5-medio: #28476B;
 
-    /* Tema Claro */
-    --bg-color: #f0f4f8; /* Um cinza-azulado muito claro */
+    --bg-color: #f0f4f8;
     --card-bg-color: #ffffff;
-    --text-color: #052D59; /* Texto principal usa o tom mais escuro */
+    --text-color: #052D59;
     --text-muted-color: #31547D;
     --header-bg-color: var(--azul-2-escuro);
     --header-text-color: #ffffff;
-    --footer-bg-color: var(--azul-2-escuro);
+    --footer-bg-color: #052D59;
     --footer-text-color: #f0f4f8;
-    --shadow-color: rgba(5, 45, 89, 0.1); /* Sombra baseada no azul escuro */
+    --shadow-color: rgba(5, 45, 89, 0.1);
 }
 
 body.dark-mode {
-    /* Tema Escuro */
-    --bg-color: #0a1929; /* Fundo bem escuro, quase preto-azulado */
+    --bg-color: #0a1929;
     --card-bg-color: #0e2a47;
     --text-color: #e0e1dd;
     --text-muted-color: #8892b0;
@@ -40,7 +36,6 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* Botão de Modo Escuro */
 .theme-switcher {
     position: fixed;
     top: 20px;
@@ -58,18 +53,29 @@ body {
     z-index: 1000;
     transition: background-color 0.3s, color 0.3s;
 }
-.theme-switcher svg {
-    width: 20px;
-    height: 20px;
-}
+.theme-switcher svg { width: 20px; height: 20px; }
 
 .header {
+    position: relative; /* Necessário para o z-index funcionar */
     background-color: var(--header-bg-color);
     color: var(--header-text-color);
-    padding: 2.5rem 1.5rem;
+    padding: 4rem 1.5rem; /* Aumentado para dar espaço à animação */
     text-align: center;
-    border-bottom: 5px solid var(--azul-4-vibrante); /* Borda com o azul vibrante */
+    border-bottom: 5px solid var(--azul-4-vibrante);
     transition: background-color 0.3s, color 0.3s;
+    overflow: hidden;
+}
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+.header-content {
+    position: relative;
+    z-index: 2;
 }
 .header h1 { margin: 0; font-size: 2.8rem; font-weight: 700; letter-spacing: 1px; }
 .header p { margin: 0.5rem 0 0; font-size: 1.2rem; opacity: 0.9; }
@@ -95,19 +101,17 @@ body {
 .summary-container .counter {
     font-size: 3.5rem;
     font-weight: 700;
-    color: var(--azul-3-principal); /* Cor do contador */
+    color: var(--azul-3-principal);
     line-height: 1.1;
     transition: color 0.3s;
 }
-body.dark-mode .summary-container .counter {
-    color: var(--azul-4-vibrante);
-}
+body.dark-mode .summary-container .counter { color: var(--azul-4-vibrante); }
 
 .controls-container { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem; }
 .tabs { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
 .tab-link {
     padding: 0.7rem 1.5rem;
-    border: 1px solid var(--azul-1); /* Borda sutil */
+    border: 1px solid var(--azul-1);
     background-color: var(--card-bg-color);
     color: var(--text-color);
     cursor: pointer;
@@ -129,6 +133,7 @@ body.dark-mode .summary-container .counter {
 .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
 .loading-message { font-style: italic; }
 
+/* Animação em Cascata e Efeito Glow */
 .dashboard-card {
     background-color: var(--card-bg-color);
     border-radius: 12px;
@@ -138,8 +143,40 @@ body.dark-mode .summary-container .counter {
     display: flex;
     flex-direction: column;
     border-left: 5px solid var(--azul-3-principal);
+    opacity: 0; /* Começa invisível para a animação */
+    animation: fadeIn 0.5s ease-out forwards;
+    position: relative; /* Para o efeito glow */
 }
-.dashboard-card:hover { transform: translateY(-6px); box-shadow: 0 8px 20px var(--shadow-color); }
+.dashboard-card::before { /* Elemento para o efeito glow */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease-out;
+}
+.dashboard-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px var(--shadow-color);
+}
+.dashboard-card:hover::before {
+    border-color: var(--azul-4-vibrante);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .card-content { padding: 1.5rem; flex-grow: 1; }
 .card-content h3 {
     margin-top: 0;
@@ -148,9 +185,7 @@ body.dark-mode .summary-container .counter {
     color: var(--azul-2-escuro);
     transition: color 0.3s;
 }
-body.dark-mode .card-content h3 {
-    color: var(--text-color);
-}
+body.dark-mode .card-content h3 { color: var(--text-color); }
 .card-content p {
     margin: 0;
     color: var(--text-muted-color);
