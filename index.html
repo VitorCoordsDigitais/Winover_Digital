@@ -17,16 +17,14 @@
         </svg>
     </div>
 
-    <!-- Header com glitch + pulse -->
-    <header class="header glitch" data-text="Winover Digital">
+    <header class="header">
         <h1>Winover Digital</h1>
         <p class="subtitle-pulse">Portal de Business Intelligence • IA & Automação</p>
     </header>
 
     <main class="container">
-        <!-- Contador com typing effect -->
         <div class="summary-container">
-            <h2 class="typing">Total de Dashboards Carregados</h2>
+            <h2 class="typing">Total de Dashboards</h2>
             <div id="bi-counter" class="counter digital">0</div>
             <div class="tech-badge">Powered by AI</div>
         </div>
@@ -48,7 +46,6 @@
             </div>
         </div>
 
-        <!-- Cards com stagger animation -->
         <div id="Todos" class="tab-content active">
             <div class="dashboard-grid futuristic-grid">
                 <p class="loading-message tech-loading">🔄 Inicializando matriz neural... <span class="dots">⠄⠆⠇⠋⠙⠸</span></p>
@@ -63,9 +60,8 @@
         <p>&copy; 2026 Winover Digital • IA Automations v2.0</p>
     </footer>
 
-    <!-- Seu script original + melhorias -->
     <script>
-        // Partículas IA (futurista)
+        // Partículas IA
         function initParticles() {
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
@@ -101,13 +97,12 @@
             animate();
         }
 
-        // Seu script original (com melhorias)
         const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQABegimqKLEvVVUJ7SyvJAYTbY4uoaDAYBnC-VCG8qO3YXfarwbxkSUr0P_c1VYBsHYce3ZKdOQoy5/pub?output=csv';
 
         document.addEventListener('DOMContentLoaded', function() {
-            initParticles(); // Partículas
+            initParticles();
 
-            // Tema (igual ao corrigido)
+            // Tema
             const themeSwitcher = document.querySelector('.theme-switcher');
             const themeIcon = document.getElementById('theme-toggle-icon');
             const sunIconPath = '<path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path><circle cx="12" cy="12" r="5"></circle>';
@@ -123,32 +118,117 @@
                 }
                 localStorage.setItem('theme', theme);
             }
+
             const currentTheme = localStorage.getItem('theme') || 'light';
             setTheme(currentTheme);
-            themeSwitcher.addEventListener('click', () => {
+
+            themeSwitcher.addEventListener('click', function() {
                 const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
                 setTheme(newTheme);
             });
 
-            // Carregamento
-            fetch(SPREADSHEET_URL).then(r => r.text()).then(csvText => {
-                const data = parseCSV(csvText);
-                populateDashboards(data);
-                openTab(null, 'Todos');
-            }).catch(e => {
-                console.error(e);
-                document.querySelector('#Todos .loading-message').innerHTML = '⚠️ Erro na matriz neural';
-            });
+            // Carregamento CSV
+            fetch(SPREADSHEET_URL)
+                .then(response => response.text())
+                .then(csvText => {
+                    const data = parseCSV(csvText);
+                    populateDashboards(data);
+                    openTab(null, 'Todos');
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    document.querySelector('#Todos .loading-message').textContent = '⚠️ Erro ao carregar dashboards.';
+                });
         });
 
-        // Suas funções originais (igual)
-        function parseCSV(text) { /* igual */ }
-        function createDashboardCard(item) { /* igual */ }
-        function populateDashboards(data) { /* igual */ }
-        function animateCounter(target) { /* igual */ }
-        function openTab(evt, tabName) { /* igual */ }
+        function parseCSV(text) {
+            const lines = text.trim().split('\n');
+            if (lines.length < 2) return [];
+            
+            const data = [];
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',').map(v => v.trim());
+                if (values[0]) {
+                    data.push({
+                        Nome: values[0] || '',
+                        Descricao: values[1] || '',
+                        Link: values[2] || '#',
+                        Categoria: values[3] || 'Outros'
+                    });
+                }
+            }
+            return data;
+        }
+
+        function createDashboardCard(item) {
+            return `
+                <div class="dashboard-card">
+                    <div class="card-content">
+                        <h3>${item.Nome}</h3>
+                        <p>${item.Descricao}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="${item.Link}" target="_blank">Acessar BI</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function populateDashboards(data) {
+            const todosGrid = document.querySelector('#Todos .dashboard-grid');
+            todosGrid.innerHTML = '';
+
+            data.forEach(item => {
+                const cardHTML = createDashboardCard(item);
+                todosGrid.innerHTML += cardHTML;
+                
+                const categoryId = item.Categoria.replace(/\s+/g, '');
+                const categoryGrid = document.querySelector(`#${categoryId} .dashboard-grid`);
+                if (categoryGrid) {
+                    categoryGrid.innerHTML += cardHTML;
+                }
+            });
+            animateCounter(data.length);
+        }
+
+        function animateCounter(target) {
+            const counterElement = document.getElementById('bi-counter');
+            let current = 0;
+            const duration = 1000;
+            let start = null;
+            
+            function step(timestamp) {
+                if (!start) start = timestamp;
+                const progress = Math.min((timestamp - start) / duration, 1);
+                counterElement.innerText = Math.floor(progress * target);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    counterElement.innerText = target;
+                }
+            }
+            window.requestAnimationFrame(step);
+        }
+
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            
+            const tablinks = document.getElementsByClassName("tab-link");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            
+            document.getElementById(tabName).style.display = "block";
+            if (evt) {
+                evt.currentTarget.className += " active";
+            } else {
+                document.querySelector('.tab-link').className += " active";
+            }
+        }
     </script>
+
 </body>
-
 </html>
-
