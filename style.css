@@ -45,7 +45,7 @@ body {
 }
 
 /* ========================================
-   CABEÇALHO COM ANIMAÇÃO
+   CABEÇALHO
    ======================================== */
 .header {
     background-color: var(--cor-fundo-header);
@@ -57,39 +57,10 @@ body {
     transition: background-color 0.3s;
 }
 
-.header-animated::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 200%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-    animation: shine 4s infinite;
-}
-
-@keyframes shine {
-    0% { left: -100%; }
-    50% { left: 100%; }
-    100% { left: 100%; }
-}
-
-.title-glow {
-    position: relative;
-    z-index: 2;
-    animation: title-bounce 3s ease-in-out infinite;
-    text-shadow: 0 0 20px rgba(9, 116, 237, 0.6);
+.header h1 {
     margin: 0;
     font-size: 2.5rem;
     font-weight: 600;
-}
-
-@keyframes title-bounce {
-    0%, 100% { transform: translateY(0); letter-spacing: 0px; }
-    50% { transform: translateY(-8px); letter-spacing: 2px; }
-}
-
-.header-content {
     position: relative;
     z-index: 2;
 }
@@ -98,6 +69,8 @@ body {
     margin: 0.5rem 0 0;
     font-size: 1.2rem;
     opacity: 0.9;
+    position: relative;
+    z-index: 2;
 }
 
 /* ========================================
@@ -129,30 +102,13 @@ body {
     color: var(--cor-texto);
 }
 
-/* Novo estilo do contador - PROFISSIONAL */
-.counter-pro {
-    font-family: 'Courier New', 'Courier', monospace;
-    font-size: 5.5rem;
+/* Contador com Montserrat - SEM ANIMAÇÃO */
+.counter-montserrat {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 5rem;
     font-weight: 900;
-    background: linear-gradient(135deg, var(--azul-5-claro) 0%, #00d9ff 50%, var(--azul-5-claro) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: 4px;
-    animation: number-glow 2s ease-in-out infinite;
-    filter: drop-shadow(0 0 10px rgba(9, 116, 237, 0.4));
-    font-variant: tabular-nums;
-}
-
-@keyframes number-glow {
-    0%, 100% {
-        transform: scale(1);
-        filter: drop-shadow(0 0 15px rgba(9, 116, 237, 0.5));
-    }
-    50% {
-        transform: scale(1.08);
-        filter: drop-shadow(0 0 25px rgba(9, 116, 237, 0.8));
-    }
+    color: var(--azul-3-base);
+    letter-spacing: 2px;
 }
 
 /* ========================================
@@ -326,6 +282,11 @@ body {
     pointer-events: none;
 }
 
+/* Canvas header particles */
+#header-particles-canvas {
+    pointer-events: none;
+}
+
 /* Subtitle pulse */
 .subtitle-pulse {
     animation: pulse-glow 3s ease-in-out infinite;
@@ -334,11 +295,6 @@ body {
 @keyframes pulse-glow {
     0%, 100% { text-shadow: 0 0 20px rgba(9, 116, 237, 0.5); }
     50% { text-shadow: 0 0 40px rgba(9, 116, 237, 0.8), 0 0 60px rgba(9, 116, 237, 0.5); }
-}
-
-/* Typing effect - REMOVIDO */
-.typing::after {
-    content: '';
 }
 
 /* Tabs futuristas */
