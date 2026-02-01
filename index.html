@@ -9,15 +9,16 @@
 <body>
 
     <div class="theme-switcher">
-        <!-- O SVG inicial agora está completo -->
-        <svg id="theme-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
+        <svg id="theme-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
     </div>
 
     <header class="header">
-        <h1>Winover Digital</h1>
-        <p>Portal de Business Intelligence</p>
+        <!-- O container para a animação de partículas -->
+        <div id="particles-js"></div>
+        <div class="header-content">
+            <h1>Winover Digital</h1>
+            <p>Portal de Business Intelligence</p>
+        </div>
     </header>
 
     <main class="container">
@@ -49,10 +50,17 @@
         <p>&copy; 2026 Winover Digital. Todos os direitos reservados.</p>
     </footer>
 
+    <!-- Scripts no final do body para melhor performance -->
+    <script src="particles.min.js"></script>
     <script>
         const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQABegimqKLEvVVUJ7SyvJAYTbY4uoaDAYBnC-VCG8qO3YXfarwbxkSUr0P_c1VYBsHYce3ZKdOQoy5/pub?output=csv';
 
         document.addEventListener('DOMContentLoaded', function( ) {
+            // Inicializa a animação de partículas
+            particlesJS.load('particles-js', 'particles.json', function() {
+                console.log('Animação de partículas carregada.');
+            });
+
             fetch(SPREADSHEET_URL)
                 .then(response => response.text())
                 .then(csvText => {
@@ -65,11 +73,8 @@
                     document.querySelector('#Todos .loading-message').textContent = 'Erro ao carregar dashboards.';
                 });
             
-            // Lógica do Modo Escuro (CORRIGIDA)
+            // Lógica do Modo Escuro
             const themeSwitcher = document.querySelector('.theme-switcher');
-            const themeIconContainer = document.getElementById('theme-toggle-icon');
-            
-            // Templates completos dos SVGs
             const sunIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path><circle cx="12" cy="12" r="5"></circle></svg>';
             const moonIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
 
@@ -124,13 +129,19 @@
             const todosGrid = document.querySelector('#Todos .dashboard-grid');
             todosGrid.innerHTML = '';
 
-            data.forEach(item => {
+            data.forEach((item, index) => {
                 const cardHTML = createDashboardCard(item);
-                todosGrid.innerHTML += cardHTML;
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = cardHTML;
+                const cardElement = tempDiv.firstChild;
+                cardElement.style.animationDelay = `${index * 0.05}s`; // Adiciona delay para animação em cascata
+
+                todosGrid.appendChild(cardElement.cloneNode(true));
+                
                 const categoryId = item.Categoria.replace(/\s+/g, '');
                 const categoryGrid = document.querySelector(`#${categoryId} .dashboard-grid`);
                 if (categoryGrid) {
-                    categoryGrid.innerHTML += cardHTML;
+                    categoryGrid.appendChild(cardElement.cloneNode(true));
                 }
             });
             animateCounter(data.length);
@@ -164,6 +175,5 @@
             }
         }
     </script>
-
 </body>
 </html>
