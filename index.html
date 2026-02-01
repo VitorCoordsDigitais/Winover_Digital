@@ -140,43 +140,55 @@
             `;
         }
 
-        function populateDashboards(data) {
-            document.querySelectorAll('.dashboard-grid').forEach(grid => grid.innerHTML = '');
+       function populateDashboards(data) {
+    // Limpa todas as grids antes de começar
+    document.querySelectorAll('.dashboard-grid').forEach(grid => grid.innerHTML = '');
 
-            if (!data || data.length === 0) {
-                const todosGrid = document.querySelector('#Todos .dashboard-grid');
-                if (todosGrid) {
-                    todosGrid.innerHTML = '<p class="loading-message">Nenhum dashboard encontrado.</p>';
-                }
-                animateCounter(0);
-                return;
+    if (!data || data.length === 0) {
+        document.querySelector('#Todos .dashboard-grid').innerHTML = '<p class="loading-message">Nenhum dashboard encontrado.</p>';
+        animateCounter(0);
+        return;
+    }
+
+    // Processa cada item dos dados
+    data.forEach((item, index) => {
+        // Garante que o item é válido antes de prosseguir
+        if (!item || !item.Nome) return;
+
+        // Cria o HTML do card
+        const cardHTML = createDashboardCard(item);
+
+        // --- CORREÇÃO PRINCIPAL: INSERÇÃO DIRETA ---
+        
+        // Insere na aba "Todos"
+        const todosGrid = document.querySelector('#Todos .dashboard-grid');
+        if (todosGrid) {
+            // Adiciona o HTML e depois pega o elemento recém-criado para animar
+            todosGrid.insertAdjacentHTML('beforeend', cardHTML);
+            const lastCardInTodos = todosGrid.lastElementChild;
+            if (lastCardInTodos) {
+                lastCardInTodos.style.animationDelay = `${index * 0.05}s`;
             }
-
-            data.forEach((item, index) => {
-                const cardHTML = createDashboardCard(item);
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = cardHTML;
-                const cardElement = tempDiv.firstChild;
-                
-                if (cardElement) {
-                    cardElement.style.animationDelay = `${index * 0.05}s`;
-
-                    const todosGrid = document.querySelector('#Todos .dashboard-grid');
-                    if (todosGrid) {
-                        todosGrid.appendChild(cardElement.cloneNode(true));
-                    }
-                    
-                    if (item.Categoria) {
-                        const categoryId = item.Categoria.trim().replace(/\s+/g, '');
-                        const categoryGrid = document.querySelector(`#${categoryId} .dashboard-grid`);
-                        if (categoryGrid) {
-                            categoryGrid.appendChild(cardElement.cloneNode(true));
-                        }
-                    }
-                }
-            });
-            animateCounter(data.length);
         }
+        
+        // Insere na aba da categoria específica
+        if (item.Categoria) {
+            const categoryId = item.Categoria.trim().replace(/\s+/g, '');
+            const categoryGrid = document.querySelector(`#${categoryId} .dashboard-grid`);
+            if (categoryGrid) {
+                // Adiciona o HTML e depois pega o elemento recém-criado para animar
+                categoryGrid.insertAdjacentHTML('beforeend', cardHTML);
+                const lastCardInCategory = categoryGrid.lastElementChild;
+                if (lastCardInCategory) {
+                    lastCardInCategory.style.animationDelay = `${index * 0.05}s`;
+                }
+            }
+        }
+    });
+
+    // Anima o contador com o número total de itens válidos
+    animateCounter(data.filter(item => item && item.Nome).length);
+}
 
         function animateCounter(target) {
             const counterElement = document.getElementById('bi-counter');
@@ -209,4 +221,5 @@
 
 </body>
 </html>
+
 
