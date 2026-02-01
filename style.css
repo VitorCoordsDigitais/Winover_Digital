@@ -36,12 +36,20 @@ body.dark-mode {
     --cor-fundo-footer: #1e2b37;
 }
 
+/* ========================================
+   TIPOGRAFIA GLOBAL - MONTSERRAT
+   ======================================== */
+* {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
     background-color: var(--cor-fundo);
     color: var(--cor-texto);
     transition: background-color 0.3s, color 0.3s;
+    font-weight: 400;
+    line-height: 1.6;
 }
 
 /* ========================================
@@ -60,9 +68,11 @@ body {
 .header h1 {
     margin: 0;
     font-size: 2.5rem;
-    font-weight: 600;
+    font-weight: 700;
     position: relative;
     z-index: 2;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.5px;
 }
 
 .header p {
@@ -71,6 +81,8 @@ body {
     opacity: 0.9;
     position: relative;
     z-index: 2;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* ========================================
@@ -80,6 +92,7 @@ body {
     max-width: 1200px;
     margin: 2rem auto;
     padding: 0 1.5rem;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* ========================================
@@ -93,22 +106,25 @@ body {
     text-align: center;
     margin-bottom: 2rem;
     transition: background-color 0.3s, box-shadow 0.3s;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .summary-container h2 {
     margin: 0 0 0.5rem;
     font-size: 1.2rem;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--cor-texto);
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* Contador com Montserrat - SEM ANIMAÇÃO */
-.counter-montserrat {
-    font-family: 'Montserrat', sans-serif;
+.counter {
+    font-family: 'Montserrat', sans-serif !important;
     font-size: 5rem;
     font-weight: 900;
     color: var(--azul-3-base);
     letter-spacing: 2px;
+    margin: 1rem 0;
 }
 
 /* ========================================
@@ -118,6 +134,7 @@ body {
     display: flex;
     justify-content: center;
     margin-bottom: 2rem;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .tabs {
@@ -138,8 +155,9 @@ body {
     cursor: pointer;
     border-radius: 50px;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     transition: background-color 0.3s, color 0.3s;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .tab-link:hover {
@@ -157,6 +175,7 @@ body {
    ======================================== */
 .tab-content {
     display: none;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .tab-content.active {
@@ -179,6 +198,7 @@ body {
     padding: 1.5rem;
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
     border: 1px solid transparent;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .dashboard-card:hover {
@@ -190,6 +210,8 @@ body {
     margin: 0 0 0.5rem;
     font-size: 1.25rem;
     color: var(--cor-texto);
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .card-content p {
@@ -197,6 +219,8 @@ body {
     color: var(--cor-texto);
     opacity: 0.8;
     line-height: 1.5;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .card-action {
@@ -210,8 +234,9 @@ body {
     padding: 0.75rem 1.5rem;
     border-radius: 50px;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 700;
     transition: background-color 0.2s, transform 0.2s;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .card-action a:hover {
@@ -224,6 +249,8 @@ body {
     text-align: center;
     font-size: 1.2rem;
     padding: 3rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
 }
 
 /* ========================================
@@ -262,6 +289,8 @@ body {
     background-color: var(--cor-fundo-footer);
     color: #ECF0F1;
     transition: background-color 0.3s;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
 }
 
 .footer p {
