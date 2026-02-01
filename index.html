@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+ <script>
     <div class="theme-switcher">
         <svg id="theme-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
     </div>
@@ -54,88 +54,70 @@
         <p>&copy; 2026 Winover Digital. Todos os direitos reservados.</p>
     </footer>
 
-    <!-- Script ÚNICO e Principal da Página -->
-    <script>
-        
-       const SPREADSHEET_URL = `https://thingproxy.freeboard.io/fetch/https://docs.google.com/spreadsheets/d/e/2PACX-1vQABegimqKLEvVVUJ7SyvJAYTbY4uoaDAYBnC-VCG8qO3YXfarwbxkSUr0P_c1VYBsHYce3ZKdOQoy5/pub?output=csv`;
+    // COLE A URL DO SEU APP DA WEB AQUI
+const API_URL = 'https://script.google.com/macros/s/AKfycbwNorQVMUl20ghMUWSlRnkIT15RenungAPBAOGsVb175Nu9s5waKBBJyz0znDM21S4kDA/exec';
 
-
-        document.addEventListener('DOMContentLoaded', function( ) {
-            
-            fetch(SPREADSHEET_URL)
-                .then(response => response.text())
-                .then(csvText => {
-                    const data = parseCSV(csvText);
-                    populateDashboards(data);
-                    openTab(null, 'Todos');
-                })
-                .catch(error => {
-                    console.error('Erro ao buscar dados da planilha:', error);
-                    document.querySelector('#Todos .loading-message').textContent = 'Erro ao carregar dashboards.';
-                });
-            
-            const themeSwitcher = document.querySelector('.theme-switcher');
-            const sunIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path><circle cx="12" cy="12" r="5"></circle></svg>';
-            const moonIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
-
-            function setTheme(theme) {
-                if (theme === 'dark') {
-                    document.body.classList.add('dark-mode');
-                    themeSwitcher.innerHTML = sunIconSVG;
-                } else {
-                    document.body.classList.remove('dark-mode');
-                    themeSwitcher.innerHTML = moonIconSVG;
-                }
-                localStorage.setItem('theme', theme);
-            }
-
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            setTheme(currentTheme);
-
-            themeSwitcher.addEventListener('click', function() {
-                const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
-                setTheme(newTheme);
-            });
-        });
-function parseCSV(text) {
-    // 1. Remove aspas duplas que o CSV do Google às vezes adiciona
-    const cleanText = text.replace(/"/g, "");
+document.addEventListener('DOMContentLoaded', function() {
     
-    // 2. Divide em linhas, e filtra quaisquer linhas que sejam vazias
-    const rows = cleanText.split('\n').filter(row => row.trim() !== '');
+    fetch(API_URL)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('A resposta da rede não foi OK: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            populateDashboards(data);
+            openTab(null, 'Todos');
+        })
+        .catch(error => {
+            console.error('Erro fatal ao buscar ou processar os dados:', error);
+            const todosGrid = document.querySelector('#Todos .dashboard-grid');
+            if (todosGrid) {
+                todosGrid.innerHTML = '<p class="loading-message">Erro ao carregar dashboards. Verifique o console para mais detalhes.</p>';
+            }
+        });
+    
+    // Lógica do Modo Escuro (continua a mesma)
+    const themeSwitcher = document.querySelector('.theme-switcher');
+    const sunIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path><circle cx="12" cy="12" r="5"></circle></svg>';
+    const moonIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
 
-    // 3. Remove a linha do cabeçalho
-    rows.shift();
+    function setTheme(theme) {
+        if (theme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeSwitcher.innerHTML = sunIconSVG;
+        } else {
+            document.body.classList.remove('dark-mode');
+            themeSwitcher.innerHTML = moonIconSVG;
+        }
+        localStorage.setItem('theme', theme);
+    }
 
-    // 4. Mapeia as linhas restantes para objetos
-    return rows.map(row => {
-        const values = row.split(',');
-        return {
-            Nome: values[0] ? values[0].trim() : '',
-            Descricao: values[1] ? values[1].trim() : '',
-            Link: values[2] ? values[2].trim() : '#',
-            Categoria: values[3] ? values[3].trim() : 'Outros'
-        };
-    }).filter(item => item.Nome); // Garante que só itens com nome sejam adicionados
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    setTheme(currentTheme);
+
+    themeSwitcher.addEventListener('click', function() {
+        const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+        setTheme(newTheme);
+    });
+});
+
+function createDashboardCard(item) {
+    return `
+        <div class="dashboard-card">
+            <div class="card-content">
+                <h3>${item.Nome}</h3>
+                <p>${item.Descricao}</p>
+            </div>
+            <div class="card-action">
+                <a href="${item.Link}" target="_blank">Acessar BI</a>
+            </div>
+        </div>
+    `;
 }
 
-
-        function createDashboardCard(item) {
-            return `
-                <div class="dashboard-card">
-                    <div class="card-content">
-                        <h3>${item.Nome}</h3>
-                        <p>${item.Descricao}</p>
-                    </div>
-                    <div class="card-action">
-                        <a href="${item.Link}" target="_blank">Acessar BI</a>
-                    </div>
-                </div>
-            `;
-        }
-
 function populateDashboards(data) {
-    // Limpa todas as grids antes de começar
     document.querySelectorAll('.dashboard-grid').forEach(grid => grid.innerHTML = '');
 
     if (!data || data.length === 0) {
@@ -143,7 +125,7 @@ function populateDashboards(data) {
         if (todosGrid) {
             todosGrid.innerHTML = '<p class="loading-message">Nenhum dashboard encontrado na planilha.</p>';
         }
-        animateCounter(0); // Zera o contador
+        animateCounter(0);
         return;
     }
 
@@ -156,23 +138,16 @@ function populateDashboards(data) {
         if (cardElement) {
             cardElement.style.animationDelay = `${index * 0.05}s`;
 
-            // Adiciona o card na aba "Todos"
             const todosGrid = document.querySelector('#Todos .dashboard-grid');
             if (todosGrid) {
                 todosGrid.appendChild(cardElement.cloneNode(true));
             }
             
-            // Adiciona o card na sua respectiva categoria (se existir)
-            // Esta é a correção principal: verifica se a categoria não está vazia
             if (item.Categoria) {
                 const categoryId = item.Categoria.trim().replace(/\s+/g, '');
                 const categoryGrid = document.querySelector(`#${categoryId} .dashboard-grid`);
-                
-                // SÓ tenta adicionar se a aba da categoria for encontrada
                 if (categoryGrid) {
                     categoryGrid.appendChild(cardElement.cloneNode(true));
-                } else {
-                    console.warn(`Aviso: Categoria "${item.Categoria}" encontrada na planilha, mas não existe uma aba correspondente no HTML.`);
                 }
             }
         }
@@ -180,39 +155,38 @@ function populateDashboards(data) {
     animateCounter(data.length);
 }
 
+function animateCounter(target) {
+    const counterElement = document.getElementById('bi-counter');
+    let current = 0;
+    const duration = 1000;
+    let start = null;
+    function step(timestamp) {
+        if (!start) start = timestamp;
+        const progress = Math.min((timestamp - start) / duration, 1);
+        counterElement.innerText = Math.floor(progress * target);
+        if (progress < 1) { window.requestAnimationFrame(step); }
+        else { counterElement.innerText = target; }
+    }
+    window.requestAnimationFrame(step);
+}
 
-        
-        function animateCounter(target) {
-            const counterElement = document.getElementById('bi-counter');
-            let current = 0;
-            const duration = 1000;
-            let start = null;
-            function step(timestamp) {
-                if (!start) start = timestamp;
-                const progress = Math.min((timestamp - start) / duration, 1);
-                counterElement.innerText = Math.floor(progress * target);
-                if (progress < 1) { window.requestAnimationFrame(step); }
-                else { counterElement.innerText = target; }
-            }
-            window.requestAnimationFrame(step);
-        }
-
-        function openTab(evt, tabName) {
-            const tabcontent = document.getElementsByClassName("tab-content");
-            for (let i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
-            const tablinks = document.getElementsByClassName("tab-link");
-            for (let i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
-            document.getElementById(tabName).style.display = "block";
-            if (evt) {
-                evt.currentTarget.className += " active";
-            } else {
-                document.querySelector('.tab-link[onclick*="\'Todos\'"]').className += " active";
-            }
-        }
+function openTab(evt, tabName) {
+    const tabcontent = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
+    const tablinks = document.getElementsByClassName("tab-link");
+    for (let i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
+    document.getElementById(tabName).style.display = "block";
+    if (evt) {
+        evt.currentTarget.className += " active";
+    } else {
+        document.querySelector('.tab-link[onclick*="\'Todos\'"]').className += " active";
+    }
+}
     </script>
 
 </body>
 </html>
+
 
 
 
