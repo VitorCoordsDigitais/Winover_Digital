@@ -45,7 +45,7 @@ body {
 }
 
 /* ========================================
-   CABEÇALHO
+   CABEÇALHO COM ANIMAÇÃO
    ======================================== */
 .header {
     background-color: var(--cor-fundo-header);
@@ -56,6 +56,36 @@ body {
     overflow: hidden;
     transition: background-color 0.3s;
 }
+
+.header-animated::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: 100%; }
+}
+
+.title-glow {
+    position: relative;
+    z-index: 2;
+    animation: title-bounce 3s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(9, 116, 237, 0.5);
+}
+
+@keyframes title-bounce {
+    0%, 100% { transform: translateY(0) }
+    50% { transform: translateY(-10px) }
+}
+
 .header-content {
     position: relative;
     z-index: 2;
@@ -99,21 +129,23 @@ body {
     color: var(--cor-texto);
 }
 
-/* Novo estilo do contador */
-.counter-style {
-    font-size: 5rem;
-    font-weight: 800;
+/* Novo estilo do contador - Fonte Orbitron Profissional */
+.counter-orbitron {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 6rem;
+    font-weight: 900;
     background: linear-gradient(135deg, var(--azul-5-claro), #00f5ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-shadow: none;
     animation: counter-pulse 2s ease-in-out infinite;
+    letter-spacing: 2px;
 }
 
 @keyframes counter-pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(9, 116, 237, 0.5)); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(9, 116, 237, 0.8)); }
 }
 
 /* ========================================
@@ -283,11 +315,6 @@ body {
 /* Typing effect - REMOVIDO */
 .typing::after {
     content: '';
-}
-
-/* Contador digital */
-.digital {
-    font-family: 'Courier New', monospace;
 }
 
 /* Tabs futuristas */
