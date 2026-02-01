@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal de Dashboards - Winover Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <!-- Partículas de fundo (IA/tech) -->
     <canvas id="particles-canvas"></canvas>
+    <canvas id="header-particles-canvas"></canvas>
 
     <div class="theme-switcher">
         <svg id="theme-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -17,15 +19,15 @@
         </svg>
     </div>
 
-    <header class="header header-animated">
-        <h1 class="title-glow">Winover Digital</h1>
+    <header class="header">
+        <h1>Winover Digital</h1>
         <p class="subtitle-pulse">Portal de Business Intelligence</p>
     </header>
 
     <main class="container">
         <div class="summary-container">
-            <h2 class="typing">Total de Dashboards</h2>
-            <div id="bi-counter" class="counter counter-pro">0</div>
+            <h2>Total de Dashboards</h2>
+            <div id="bi-counter" class="counter counter-montserrat">0</div>
         </div>
 
         <div class="controls-container">
@@ -60,7 +62,7 @@
     </footer>
 
     <script>
-        // Partículas IA
+        // Partículas IA - Fundo Principal
         function initParticles() {
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
@@ -96,10 +98,56 @@
             animate();
         }
 
+        // Partículas no Header (cor diferente)
+        function initHeaderParticles() {
+            const canvas = document.getElementById('header-particles-canvas');
+            const ctx = canvas.getContext('2d');
+            const header = document.querySelector('.header');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = header.offsetHeight;
+            canvas.style.position = 'absolute';
+            canvas.style.top = '0';
+            canvas.style.left = '0';
+            canvas.style.zIndex = '1';
+            canvas.style.pointerEvents = 'none';
+
+            header.style.position = 'relative';
+
+            const particles = [];
+            for (let i = 0; i < 60; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    radius: Math.random() * 1.5 + 0.5,
+                    glow: Math.random() * 0.4 + 0.3
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(0, 245, 255, ${p.glow})`;
+                    ctx.fill();
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
         const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQABegimqKLEvVVUJ7SyvJAYTbY4uoaDAYBnC-VCG8qO3YXfarwbxkSUr0P_c1VYBsHYce3ZKdOQoy5/pub?output=csv';
 
         document.addEventListener('DOMContentLoaded', function() {
             initParticles();
+            initHeaderParticles();
 
             // Tema
             const themeSwitcher = document.querySelector('.theme-switcher');
