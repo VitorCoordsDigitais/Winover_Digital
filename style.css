@@ -127,7 +127,7 @@ body {
     opacity: 0.85;
 }
 
-/* Contador com Montserrat - ELEGANTE (SEM SCALE NO HOVER) */
+/* Contador com Montserrat - ELEGANTE (BRANCO NO DARK MODE) */
 .counter {
     font-family: 'Montserrat', sans-serif !important;
     font-size: 5.5rem;
@@ -141,24 +141,30 @@ body {
     line-height: 1;
 }
 
+/* Hover normal (claro) */
 .summary-container:hover .counter {
     color: var(--azul-2-medio-escuro);
 }
 
-/* Efeito de underline sutil */
-/*.summary-container::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--azul-3-base), transparent);
-    border-radius: 2px;
-    opacity: 0;
-    transition: opacity 0.3s ease, width 0.3s ease;
-}*/
+/* MODO ESCURO - NÚMERO BRANCO */
+body.dark-mode .counter {
+    color: #FFFFFF !important;
+}
+
+body.dark-mode .summary-container:hover .counter {
+    color: #F0F0F0 !important;
+}
+
+/* Título do summary também branco no dark mode */
+body.dark-mode .summary-container h2 {
+    color: rgba(255, 255, 255, 0.9) !important;
+    opacity: 1;
+}
+
+
+.summary-container:hover .counter {
+    color: var(--azul-2-medio-escuro);
+}
 
 .summary-container:hover::after {
     opacity: 1;
